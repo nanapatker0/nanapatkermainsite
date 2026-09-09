@@ -21,7 +21,7 @@
         /* LOGIN SCREEN WITH PASSWORD VIEWER */
         #admin-login-screen { display: flex; justify-content: center; align-items: center; height: 100vh; width: 100vw; background: #000; position: fixed; z-index: 2000; top: 0; left: 0; }
         .glass-panel { width: 90%; max-width: 400px; padding: 40px 30px; background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(24px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; text-align: center; color: #fff; }
-        .glass-panel h1 { font-family: serif; letter-spacing: 2px; color: var(--primary-gold); margin-bottom: 5px; }
+        .glass-panel h1 { font-family: serif; font-weight: normal; letter-spacing: 2px; color: var(--primary-gold); margin-bottom: 5px; }
         .input-group { margin-bottom: 20px; text-align: left; position: relative; }
         .input-group label { display: block; font-size: 12px; margin-bottom: 5px; color: #aaa; }
         .input-group input { width: 100%; padding: 12px; padding-right: 40px; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; color: #fff; outline: none; }
@@ -33,13 +33,18 @@
         
         #admin-dashboard { display: none; width: 100vw; height: 100vh; }
         .sidebar { width: 260px; background-color: var(--sidebar-bg); color: #fff; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; z-index: 1000; transition: 0.3s;}
-        .logo-container { padding: 30px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;}
-        .logo-container h2 { font-family: serif; letter-spacing: 2px; font-size: 20px; color: var(--primary-gold); width: 100%; text-align: center;}
-        .close-sidebar { display: none; font-size: 20px; color: #fff; cursor: pointer; }
-        .nav-menu { list-style: none; padding: 20px 15px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
-        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #aaa; text-decoration: none; font-size: 14px; border-radius: 8px; margin-bottom: 10px; cursor: pointer; }
-        .nav-link.active { background-color: #26211a; color: var(--primary-gold); }
-        .nav-link i { width: 24px; }
+        
+        /* FIX: MATCHED LOGO STYLING EXACTLY WITH CLIENT PORTAL */
+        .logo-container { padding: 35px 20px 25px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative;}
+        .logo-container h2 { font-family: serif; font-weight: normal; letter-spacing: 2px; font-size: 22px; margin-bottom: 4px; color: #fff; }
+        .logo-container p { font-size: 7px; letter-spacing: 2px; color: #888; text-transform: uppercase; margin: 0; }
+        .close-sidebar { display: none; position: absolute; right: 20px; top: 38px; font-size: 20px; color: #fff; cursor: pointer; }
+        
+        /* FIX: MATCHED MENU LINKS WITH CLIENT PORTAL */
+        .nav-menu { list-style: none; padding: 20px 12px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
+        .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #aaa; text-decoration: none; font-size: 13px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; transition: 0.3s; }
+        .nav-link:hover, .nav-link.active { background-color: #26211a; color: var(--primary-gold); }
+        .nav-link i { width: 22px; font-size: 14px; }
         .sidebar-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 999; }
         
         .main-content { flex: 1; display: flex; flex-direction: column; height: 100vh; overflow: hidden; width: 100%; }
@@ -61,7 +66,6 @@
         .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
         .btn-secondary { background: #fff; color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 5px; transition: 0.3s;}
         .btn-secondary:hover { background: #f4f6f9; }
-        /* NEW DELETE BUTTON CSS */
         .btn-danger { background: var(--danger-red); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px; justify-content: center; transition: 0.3s;}
         .btn-danger:hover { background: #c53030; }
         
@@ -101,9 +105,8 @@
             .admin-profile span { display: none; }
             .workspace { padding: 15px; }
             .header-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
-            /* Mobile Buttons Grid Updated */
             .header-actions > div { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-            #save-btn { grid-column: 1 / -1; } /* Save button takes full width on mobile */
+            #save-btn { grid-column: 1 / -1; }
             .header-actions .btn-primary, .header-actions .btn-secondary, .header-actions .btn-danger { width: 100%; padding: 12px; font-size: 13px;}
             .form-grid { grid-template-columns: 1fr; gap: 15px;}
             .form-section { padding: 15px; }
@@ -139,12 +142,16 @@
 
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
+            <!-- FIX: HTML UPDATED TO MATCH CLIENT LOGO -->
             <div class="logo-container">
-                <div><h2>HARVISHA</h2><p style="margin-top: 5px;">Admin Portal</p></div>
+                <div style="width: 100%;">
+                    <h2>HARVISHA</h2>
+                    <p>ADMIN PORTAL</p>
+                </div>
                 <i class="fa-solid fa-xmark close-sidebar" onclick="toggleSidebar()"></i>
             </div>
             <ul class="nav-menu">
-                <li><a class="nav-link active" onclick="switchView('clients'); toggleSidebar();"><i class="fa-solid fa-users"></i> Manage Clients</a></li>
+                <li><a class="nav-link active" onclick="switchView('clients'); toggleSidebar();"><i class="fa-solid fa-users"></i> Dashboard</a></li>
                 <li style="margin-top: auto;"><a class="nav-link" style="color: #d9534f;" onclick="adminLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
             </ul>
         </aside>
@@ -182,7 +189,6 @@
                     <div class="header-actions">
                         <h2 style="font-size: 22px; font-weight: 600;"><i class="fa-solid fa-arrow-left" style="cursor: pointer; margin-right: 15px; color: var(--text-muted);" onclick="switchView('clients')"></i> <span id="editor-title">Create Client</span></h2>
                         <div style="display: flex; gap: 10px;">
-                            <!-- NEW DELETE BUTTON ADDED HERE -->
                             <button class="btn-danger" id="delete-btn" onclick="deleteClient()" style="display: none;"><i class="fa-solid fa-trash"></i> Delete</button>
                             <button class="btn-secondary" onclick="switchView('clients')">Cancel</button>
                             <button class="btn-primary" id="save-btn" onclick="saveClientData()"><i class="fa-solid fa-floppy-disk"></i> Save Client</button>
