@@ -367,12 +367,27 @@
         function renderTable(dataArray) {
             const tbody = document.getElementById('clients-table-body');
             tbody.innerHTML = "";
+            
             if(dataArray.length === 0) return tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No clients found.</td></tr>`;
+            
             dataArray.forEach(client => {
                 const stepIdx = client.currentStep || 0;
+                
+                // CHECK KAREIN KI ALBUM APPROVED HAI YA NAHI (Green Badge Dikhane ke liye)
+                const albumBadge = (client.albumStatus && client.albumStatus.includes('Approved')) 
+                    ? `<br><span style="display:inline-block; margin-top:5px; background:#e6f4ea; color:#38a169; padding:3px 8px; border-radius:4px; font-size:10px;"><i class="fa-solid fa-check-double"></i> Album Approved</span>` 
+                    : '';
+
                 const tr = document.createElement('tr');
                 tr.onclick = () => openEditForm(client.id);
-                tr.innerHTML = `<td><strong>${client.groom || 'N/A'} & ${client.bride || 'N/A'}</strong></td><td>${client.id}</td><td>${client.weddingDate || '--'}</td><td><span class="status-badge active">${timelineLabels[stepIdx] || "Unknown"}</span></td><td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button></td>`;
+                
+                tr.innerHTML = `
+                    <td><strong>${client.groom || 'N/A'} & ${client.bride || 'N/A'}</strong> ${albumBadge}</td>
+                    <td>${client.id}</td>
+                    <td>${client.weddingDate || '--'}</td>
+                    <td><span class="status-badge active">${timelineLabels[stepIdx] || "Unknown"}</span></td>
+                    <td><button class="btn-secondary" style="padding: 6px 12px; font-size: 12px;">Edit</button></td>
+                `;
                 tbody.appendChild(tr);
             });
         }
