@@ -61,6 +61,9 @@
         .btn-primary:disabled { opacity: 0.7; cursor: not-allowed; }
         .btn-secondary { background: #fff; color: var(--text-main); border: 1px solid var(--border-color); padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; justify-content: center; align-items: center; gap: 5px; transition: 0.3s;}
         .btn-secondary:hover { background: #f4f6f9; }
+        /* NEW DELETE BUTTON CSS */
+        .btn-danger { background: var(--danger-red); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px; justify-content: center; transition: 0.3s;}
+        .btn-danger:hover { background: #c53030; }
         
         .client-table-container { background: #fff; border-radius: 12px; border: 1px solid var(--border-color); overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; min-width: 600px; }
@@ -98,8 +101,10 @@
             .admin-profile span { display: none; }
             .workspace { padding: 15px; }
             .header-actions { flex-direction: column; align-items: flex-start; gap: 12px; }
-            .header-actions > div { width: 100%; display: flex; gap: 10px; }
-            .header-actions .btn-primary, .header-actions .btn-secondary { flex: 1; padding: 12px; font-size: 13px;}
+            /* Mobile Buttons Grid Updated */
+            .header-actions > div { width: 100%; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+            #save-btn { grid-column: 1 / -1; } /* Save button takes full width on mobile */
+            .header-actions .btn-primary, .header-actions .btn-secondary, .header-actions .btn-danger { width: 100%; padding: 12px; font-size: 13px;}
             .form-grid { grid-template-columns: 1fr; gap: 15px;}
             .form-section { padding: 15px; }
             #toast { left: 50%; transform: translateX(-50%); right: auto; bottom: 20px; white-space: nowrap; }
@@ -120,7 +125,6 @@
             <div class="input-group">
                 <label>Password</label>
                 <input type="password" id="admin-password" placeholder="••••••••">
-                <!-- Admin Password Toggle Icon -->
                 <i class="fa-regular fa-eye toggle-password" id="adminTogglePasswordIcon" onclick="toggleAdminPassword()"></i>
             </div>
             <button class="btn-gold-login" onclick="adminLogin()">Login to Dashboard</button>
@@ -177,7 +181,9 @@
                 <div id="view-editor">
                     <div class="header-actions">
                         <h2 style="font-size: 22px; font-weight: 600;"><i class="fa-solid fa-arrow-left" style="cursor: pointer; margin-right: 15px; color: var(--text-muted);" onclick="switchView('clients')"></i> <span id="editor-title">Create Client</span></h2>
-                        <div>
+                        <div style="display: flex; gap: 10px;">
+                            <!-- NEW DELETE BUTTON ADDED HERE -->
+                            <button class="btn-danger" id="delete-btn" onclick="deleteClient()" style="display: none;"><i class="fa-solid fa-trash"></i> Delete</button>
                             <button class="btn-secondary" onclick="switchView('clients')">Cancel</button>
                             <button class="btn-primary" id="save-btn" onclick="saveClientData()"><i class="fa-solid fa-floppy-disk"></i> Save Client</button>
                         </div>
@@ -426,6 +432,9 @@
             document.getElementById('client-form').reset();
             document.getElementById('f-email').disabled = false;
             
+            // Delete Button Hide Karein naye client banate time
+            document.getElementById('delete-btn').style.display = 'none';
+
             // Show Password Setup Field, Hide Reset Button
             document.getElementById('password-group').style.display = 'flex';
             document.getElementById('reset-password-group').style.display = 'none';
@@ -444,6 +453,9 @@
             document.getElementById('f-email').value = client.id;
             document.getElementById('f-email').disabled = true; 
             
+            // Delete Button Show Karein edit karte time
+            document.getElementById('delete-btn').style.display = 'flex';
+
             // Hide Password Setup Field, Show Reset Button
             document.getElementById('password-group').style.display = 'none';
             document.getElementById('reset-password-group').style.display = 'flex';
@@ -474,6 +486,32 @@
             document.getElementById('f-link7').value = client.linkFinalDelivery || '';
 
             switchView('editor');
+        }
+
+        // ====== DELETE CLIENT LOGIC ======
+        async function deleteClient() {
+            const emailId = document.getElementById('f-email').value;
+            if (!emailId) return;
+
+            // Security check before deleting
+            const confirmDelete = confirm(`Are you sure you want to permanently delete the client:\n${emailId}?\n\nThis action cannot be undone and they will lose access to their portal.`);
+            
+            if (confirmDelete) {
+                try {
+                    document.getElementById('delete-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
+                    
+                    // Delete from Firestore Database
+                    await db.collection('clients').doc(emailId).delete();
+                    
+                    showToast("Client deleted successfully!");
+                    switchView('clients'); // Go back to table
+                } catch (error) {
+                    console.error("Error deleting client: ", error);
+                    alert("Error deleting client: " + error.message);
+                } finally {
+                    document.getElementById('delete-btn').innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
+                }
+            }
         }
 
         // ====== ACCOUNT CREATION & UPLOAD LOGIC ======
@@ -514,7 +552,7 @@
                 const fileInput = document.getElementById('f-coverImgUpload');
 
                 if (fileInput.files.length > 0) {
-                    saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image to Drive...';
+                    saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image...';
                     
                     const file = fileInput.files[0];
                     const base64String = await new Promise((resolve) => {
