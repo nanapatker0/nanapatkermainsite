@@ -109,6 +109,7 @@
         .d-album-details h4 { font-size: 14px; color: var(--primary-gold); margin-bottom: 10px; font-weight: 600;}
         .d-album-img { width: 120px; height: 80px; object-fit: cover; border-radius: 6px; transition: 0.3s; }
         .d-btn-album { background: var(--primary-gold); color: #fff; border: none; padding: 7px 12px; border-radius: 4px; font-size: 10px; cursor: pointer; margin-top: 5px;}
+        .d-btn-album:disabled { opacity: 0.8; cursor: default; }
         
         .d-help-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: var(--card-bg); border-radius: 12px; border: 1px solid var(--border-color); flex-shrink: 0;}
         .d-btn-contact { border: 1px solid var(--border-color); background: transparent; padding: 6px 12px; border-radius: 6px; font-size: 11px; cursor: pointer; display: flex; align-items: center; gap: 5px; color: var(--text-main); text-decoration: none;}
@@ -180,6 +181,7 @@
         .m-album-img { width: 100px; height: 60px; object-fit: cover; border-radius: 6px; }
         .m-album-buttons { display: flex; gap: 8px; }
         .m-btn-album { flex: 1; background: var(--primary-gold); color: #fff; border: none; padding: 8px; border-radius: 6px; font-size: 9px; font-weight: 500; cursor: pointer;}
+        .m-btn-album:disabled { opacity: 0.8; cursor: default; }
         
         .m-help-buttons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 10px;}
         .m-btn-contact { border: 1px solid var(--border-color); background: transparent; padding: 8px 0; border-radius: 6px; font-size: 9px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 4px; color: var(--text-main); text-decoration: none;}
@@ -229,7 +231,6 @@
                     <p>PHOTOGRAPHY • FILMS • MEMORIES</p>
                 </div>
                 <ul class="d-nav-menu">
-                    <!-- Kept only Dashboard and Logout for cleaner UI -->
                     <li class="d-nav-item active"><a href="#" class="d-nav-link"><i class="fa-solid fa-house"></i> Dashboard</a></li>
                     
                     <div style="flex-grow: 1;"></div>
@@ -311,8 +312,8 @@
                                     <div class="d-card-header-title" style="margin-bottom: 8px;"><i class="fa-regular fa-image" style="color: var(--text-muted);"></i> Album Status</div>
                                     <h4 id="d-albumStatusText">N/A</h4>
                                     <div id="d-album-action-buttons" style="display: flex; gap: 5px;">
-                                        <button class="d-btn-album" style="background: #333;">Preview</button>
-                                        <button class="d-btn-album"><i class="fa-solid fa-check"></i> Approve</button>
+                                        <button class="d-btn-album" style="background: #333;" onclick="openLink('albumPreview')"><i class="fa-regular fa-eye"></i> Preview</button>
+                                        <button class="d-btn-album" id="d-approve-btn" onclick="approveAlbum()"><i class="fa-solid fa-check"></i> Approve</button>
                                     </div>
                                 </div>
                                 <img src="https://images.unsplash.com/photo-1544485557-01300de1097c?auto=format&fit=crop&w=300&q=80" id="d-albumCover" class="d-album-img">
@@ -409,7 +410,7 @@
                         <div class="m-card-header" style="justify-content: space-between;">
                             <span><i class="fa-solid fa-wallet"></i> Payment Summary</span>
                             <span style="font-size: 8px; border: 1px solid var(--border-color); padding: 3px 6px; border-radius: 4px; color: var(--text-muted);">View Details</span>
-                        </div>
+                            </div>
                         <div class="m-payment-stats">
                             <div class="m-stat-box"><p>Total Package</p><h3 id="m-totalAmount">₹ 0</h3></div>
                             <div class="m-stat-box"><p>Paid Amount</p><h3 style="color: var(--success-green);" id="m-paidAmount">₹ 0</h3></div>
@@ -429,8 +430,8 @@
                             <img src="https://images.unsplash.com/photo-1544485557-01300de1097c?auto=format&fit=crop&w=300&q=80" id="m-albumCover" class="m-album-img">
                         </div>
                         <div class="m-album-buttons" id="m-album-action-buttons">
-                            <button class="m-btn-album" style="background:#111;"><i class="fa-regular fa-eye"></i> View Preview</button>
-                            <button class="m-btn-album"><i class="fa-solid fa-check"></i> Approve Album</button>
+                            <button class="m-btn-album" style="background:#111;" onclick="openLink('albumPreview')"><i class="fa-regular fa-eye"></i> View Preview</button>
+                            <button class="m-btn-album" id="m-approve-btn" onclick="approveAlbum()"><i class="fa-solid fa-check"></i> Approve Album</button>
                         </div>
                     </div>
 
@@ -598,10 +599,37 @@
                         updateDOM(pfx+'paymentStatus', isUnpaid ? "#fff5f5" : "#e6f4ea", "bg");
                         updateDOM(pfx+'paymentStatus', isUnpaid ? "#e53e3e" : "#38a169", "color");
 
+                        // ALBUM STATUS LOGIC
                         const albumStatus = data.albumStatus || "N/A";
                         updateDOM(pfx+'albumStatusText', albumStatus);
-                        updateDOM(pfx+'album-action-buttons', albumStatus.toLowerCase() === "n/a" ? "none" : "flex", "display");
-                        updateDOM(pfx+'albumCover', albumStatus.toLowerCase() === "n/a" ? "0.2" : "1", "opacity");
+
+                        const actionGroup = document.getElementById(pfx+'album-action-buttons');
+                        const approveBtn = document.getElementById(pfx+'approve-btn');
+
+                        if (albumStatus.toLowerCase() === "n/a" || albumStatus.trim() === "") {
+                            if(actionGroup) actionGroup.style.display = "none";
+                            updateDOM(pfx+'albumCover', "0.2", "opacity");
+                        } else {
+                            if(actionGroup) actionGroup.style.display = "flex";
+                            updateDOM(pfx+'albumCover', "1", "opacity");
+                            
+                            // Agar client ne pehle hi approve kar diya hai
+                            if (albumStatus.includes("Approved") || albumStatus.includes("Approved ✅")) {
+                                if(approveBtn) {
+                                    approveBtn.disabled = true;
+                                    approveBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Approved';
+                                    approveBtn.style.background = "#38a169";
+                                    approveBtn.style.cursor = "default";
+                                }
+                            } else {
+                                if(approveBtn) {
+                                    approveBtn.disabled = false;
+                                    approveBtn.innerHTML = pfx === 'd-' ? '<i class="fa-solid fa-check"></i> Approve' : '<i class="fa-solid fa-check"></i> Approve Album';
+                                    approveBtn.style.background = "var(--primary-gold)";
+                                    approveBtn.style.cursor = "pointer";
+                                }
+                            }
+                        }
                     });
                     
                     updateTimeline(data.currentStep || 0);
@@ -661,6 +689,36 @@
             const url = clientDriveLinks[type];
             if(url && url.trim() !== "") window.open(url, '_blank');
             else alert("File not uploaded yet.");
+        }
+
+        // ====== NAYA FUNCTION: ALBUM APPROVE KARNE KE LIYE ======
+        async function approveAlbum() {
+            const email = document.getElementById('email').value; 
+            
+            if(confirm("Are you sure you want to approve the album design? Once approved, it will go for printing.")){
+                try {
+                    // Firestore mein Album Status update kar rahe hain
+                    await db.collection('clients').doc(email).update({
+                        albumStatus: "Approved ✅"
+                    });
+                    
+                    alert("Album Approved Successfully!");
+                    
+                    // Screen par turant changes dikhane ke liye
+                    ['d-', 'm-'].forEach(pfx => {
+                        updateDOM(pfx+'albumStatusText', "Approved ✅");
+                        const approveBtn = document.getElementById(pfx+'approve-btn');
+                        if(approveBtn) {
+                            approveBtn.disabled = true;
+                            approveBtn.innerHTML = '<i class="fa-solid fa-check-double"></i> Approved';
+                            approveBtn.style.background = "#38a169"; // Green color
+                            approveBtn.style.cursor = "default";
+                        }
+                    });
+                } catch (error) {
+                    alert("Error approving album. Please try again.");
+                }
+            }
         }
 
         function logout() {
