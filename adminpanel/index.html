@@ -370,7 +370,7 @@
                 
                 if (adminDoc.exists) {
                     currentAdminRole = adminDoc.data().role; 
-                } else if (currentAdminEmail === 'admin@harvishapictures.com') {
+                } else if (currentAdminEmail === 'pandeyharshvardhan568@gmail.com') {
                     currentAdminRole = 'super_admin';
                     await db.collection('admins').doc(currentAdminEmail).set({ email: currentAdminEmail, role: 'super_admin' });
                 } else {
