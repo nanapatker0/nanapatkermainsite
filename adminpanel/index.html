@@ -34,13 +34,11 @@
         #admin-dashboard { display: none; width: 100vw; height: 100vh; }
         .sidebar { width: 260px; background-color: var(--sidebar-bg); color: #fff; display: flex; flex-direction: column; height: 100vh; flex-shrink: 0; z-index: 1000; transition: 0.3s;}
         
-        /* FIX: MATCHED LOGO STYLING EXACTLY WITH CLIENT PORTAL */
         .logo-container { padding: 35px 20px 25px 20px; text-align: center; border-bottom: 1px solid rgba(255,255,255,0.05); position: relative;}
         .logo-container h2 { font-family: serif; font-weight: normal; letter-spacing: 2px; font-size: 22px; margin-bottom: 4px; color: #fff; }
         .logo-container p { font-size: 7px; letter-spacing: 2px; color: #888; text-transform: uppercase; margin: 0; }
         .close-sidebar { display: none; position: absolute; right: 20px; top: 38px; font-size: 20px; color: #fff; cursor: pointer; }
         
-        /* FIX: MATCHED MENU LINKS WITH CLIENT PORTAL */
         .nav-menu { list-style: none; padding: 20px 12px; display: flex; flex-direction: column; flex-grow: 1; overflow: hidden; }
         .nav-link { display: flex; align-items: center; padding: 12px 15px; color: #aaa; text-decoration: none; font-size: 13px; border-radius: 8px; margin-bottom: 6px; cursor: pointer; transition: 0.3s; }
         .nav-link:hover, .nav-link.active { background-color: #26211a; color: var(--primary-gold); }
@@ -58,8 +56,8 @@
         .admin-profile .avatar { width: 35px; height: 35px; background: var(--primary-gold); color: #fff; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-weight: bold; }
         
         .workspace { flex: 1; padding: 30px; overflow-y: auto; }
-        #view-clients, #view-editor { display: none; }
-        #view-clients.active, #view-editor.active { display: block; }
+        #view-clients, #view-editor, #view-admins { display: none; }
+        #view-clients.active, #view-editor.active, #view-admins.active { display: block; }
         
         .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 15px;}
         .btn-primary { background: var(--primary-gold); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 14px; display: flex; align-items: center; gap: 8px; justify-content: center; }
@@ -83,10 +81,11 @@
         .form-group.full-width { grid-column: 1 / -1; }
         .form-group label { font-size: 13px; font-weight: 500; color: var(--text-main); }
         .form-group input, .form-group select { padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 14px; outline: none; background: #fff;}
-        .form-group input:disabled { background: #f1f5f9; cursor: not-allowed; }
+        .form-group input:disabled, .form-group select:disabled { background: #f1f5f9; cursor: not-allowed; opacity: 0.7;}
         
         .upload-box { border: 2px dashed var(--border-color); border-radius: 8px; padding: 15px; text-align: center; position: relative; background: #fafafa; }
         .upload-box input[type="file"] { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+        .upload-box input[type="file"]:disabled { cursor: not-allowed; }
         .upload-content { display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
         .upload-content i { font-size: 24px; color: var(--text-muted); }
         .upload-content span { font-size: 12px; color: var(--text-muted); }
@@ -94,6 +93,10 @@
         
         #toast { position: fixed; bottom: 30px; right: 30px; background: #333; color: #fff; padding: 15px 25px; border-radius: 8px; display: none; align-items: center; gap: 10px; z-index: 9999; }
         
+        .role-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+        .role-super { background: #fff3cd; color: #856404; }
+        .role-editor { background: #d1ecf1; color: #0c5460; }
+
         @media (max-width: 768px) {
             .sidebar { position: fixed; left: -260px; }
             .sidebar.open { left: 0; }
@@ -142,7 +145,6 @@
 
         <!-- Sidebar -->
         <aside class="sidebar" id="sidebar">
-            <!-- FIX: HTML UPDATED TO MATCH CLIENT LOGO -->
             <div class="logo-container">
                 <div style="width: 100%;">
                     <h2>HARVISHA</h2>
@@ -151,7 +153,9 @@
                 <i class="fa-solid fa-xmark close-sidebar" onclick="toggleSidebar()"></i>
             </div>
             <ul class="nav-menu">
-                <li><a class="nav-link active" onclick="switchView('clients'); toggleSidebar();"><i class="fa-solid fa-users"></i> Dashboard</a></li>
+                <li><a class="nav-link active" id="nav-clients" onclick="switchView('clients'); toggleSidebar();"><i class="fa-solid fa-users"></i> Dashboard</a></li>
+                <!-- Manage Admins (Sirf Super Admin ko dikhega) -->
+                <li id="menu-manage-admins" style="display: none;"><a class="nav-link" id="nav-admins" onclick="switchView('admins'); toggleSidebar();"><i class="fa-solid fa-user-shield"></i> Manage Admins</a></li>
                 <li style="margin-top: auto;"><a class="nav-link" style="color: #d9534f;" onclick="adminLogout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a></li>
             </ul>
         </aside>
@@ -166,7 +170,7 @@
                         <input type="text" id="search-input" placeholder="Search clients..." onkeyup="filterClients()">
                     </div>
                 </div>
-                <div class="admin-profile"><span>Welcome, Harsh</span><div class="avatar">H</div></div>
+                <div class="admin-profile"><span id="profile-name">Welcome</span><div class="avatar">H</div></div>
             </header>
 
             <div class="workspace">
@@ -174,12 +178,36 @@
                 <div id="view-clients" class="active">
                     <div class="header-actions">
                         <h2 style="font-size: 22px; font-weight: 600;">Client Projects</h2>
-                        <button class="btn-primary" onclick="openCreateForm()"><i class="fa-solid fa-plus"></i> Add New Client</button>
+                        <button class="btn-primary" id="btn-add-client" onclick="openCreateForm()"><i class="fa-solid fa-plus"></i> Add New Client</button>
                     </div>
                     <div class="client-table-container">
                         <table>
                             <thead><tr><th>Couple Name</th><th>Client Email ID</th><th>Wedding Date</th><th>Current Step</th><th>Actions</th></tr></thead>
                             <tbody id="clients-table-body"><tr><td colspan="5" style="text-align: center;">Loading clients...</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ADMINS MANAGEMENT VIEW -->
+                <div id="view-admins">
+                    <div class="header-actions">
+                        <h2 style="font-size: 22px; font-weight: 600;">Manage Portal Admins</h2>
+                    </div>
+                    
+                    <div class="form-section">
+                        <h3><i class="fa-solid fa-user-plus"></i> Add Sub-Admin (Editor)</h3>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Editors can only view client list and update Deliverable Links. They cannot add clients, delete clients, or view/edit payment details.</p>
+                        <div class="form-grid" style="align-items: end;">
+                            <div class="form-group"><label>Admin Email</label><input type="email" id="new-admin-email" placeholder="editor@harvishapictures.com"></div>
+                            <div class="form-group"><label>Password (Min 6 char)</label><input type="text" id="new-admin-password" placeholder="e.g. Editor@123"></div>
+                            <div class="form-group"><button class="btn-primary" id="btn-add-admin" onclick="createSubAdmin()">Create Sub-Admin</button></div>
+                        </div>
+                    </div>
+
+                    <div class="client-table-container">
+                        <table>
+                            <thead><tr><th>Admin Email</th><th>Role</th><th>Actions</th></tr></thead>
+                            <tbody id="admins-table-body"><tr><td colspan="3" style="text-align: center;">Loading admins...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -191,8 +219,12 @@
                         <div style="display: flex; gap: 10px;">
                             <button class="btn-danger" id="delete-btn" onclick="deleteClient()" style="display: none;"><i class="fa-solid fa-trash"></i> Delete</button>
                             <button class="btn-secondary" onclick="switchView('clients')">Cancel</button>
-                            <button class="btn-primary" id="save-btn" onclick="saveClientData()"><i class="fa-solid fa-floppy-disk"></i> Save Client</button>
+                            <button class="btn-primary" id="save-btn" onclick="saveClientData()"><i class="fa-solid fa-floppy-disk"></i> Save Data</button>
                         </div>
+                    </div>
+
+                    <div style="background: #eef2ff; color: #4338ca; padding: 10px 15px; border-radius: 8px; margin-bottom: 20px; font-size: 13px; font-weight: 500; display: none;" id="editor-warning">
+                        <i class="fa-solid fa-lock"></i> Editor Mode Active: You can only update Deliverable Links. Amounts and other details are hidden or locked.
                     </div>
 
                     <form id="client-form" onsubmit="event.preventDefault();">
@@ -201,17 +233,14 @@
                             <div class="form-grid">
                                 <div class="form-group full-width"><label>Client Email (Login ID) *</label><input type="email" id="f-email" required></div>
                                 
-                                <!-- NEW CLIENT: SET PASSWORD -->
                                 <div class="form-group full-width" id="password-group" style="display: none;">
                                     <label>Set Client Login Password (Min 6 Characters) *</label>
                                     <input type="text" id="f-password" placeholder="e.g. Harvisha@123">
                                 </div>
 
-                                <!-- EXISTING CLIENT: SEND RESET LINK -->
                                 <div class="form-group full-width" id="reset-password-group" style="display: none; background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color);">
                                     <label>Client Password Security</label>
                                     <button type="button" class="btn-secondary" onclick="sendClientPasswordReset()" style="width: max-content;"><i class="fa-regular fa-envelope"></i> Send Password Reset Link to Client</button>
-                                    <small style="color: var(--text-muted); font-size: 11px; margin-top: 5px;">*You cannot view/change an existing client's password directly. Click to email them a secure reset link.</small>
                                 </div>
                                 
                                 <div class="form-group"><label>Groom's Name</label><input type="text" id="f-groom"></div>
@@ -220,10 +249,10 @@
                                 
                                 <div class="form-group">
                                     <label>Project Cover Image</label>
-                                    <div class="upload-box">
+                                    <div class="upload-box" id="upload-box-ui">
                                         <input type="file" id="f-coverImgUpload" accept="image/*" onchange="previewImage(event)">
                                         <div class="upload-content" id="upload-content-placeholder">
-                                            <i class="fa-solid fa-cloud-arrow-up"></i><span>Tap to upload image to Google Drive</span>
+                                            <i class="fa-solid fa-cloud-arrow-up"></i><span>Tap to upload image</span>
                                         </div>
                                         <img id="cover-preview" class="image-preview" src="">
                                     </div>
@@ -253,17 +282,19 @@
                         <div class="form-section">
                             <h3><i class="fa-solid fa-wallet"></i> Payments & Album Status</h3>
                             <div class="form-grid">
-                                <div class="form-group"><label>Total Amount</label><input type="number" id="f-totalAmt"></div>
-                                <div class="form-group"><label>Paid Amount</label><input type="number" id="f-paidAmt"></div>
-                                <div class="form-group"><label>Balance Amount</label><input type="number" id="f-balAmt"></div>
-                                <div class="form-group"><label>Payment Status</label>
+                                <!-- AMOUNT GROUPS: Added 'amount-group' class to hide them from sub-admins -->
+                                <div class="form-group amount-group"><label>Total Amount</label><input type="number" id="f-totalAmt"></div>
+                                <div class="form-group amount-group"><label>Paid Amount</label><input type="number" id="f-paidAmt"></div>
+                                <div class="form-group amount-group"><label>Balance Amount</label><input type="number" id="f-balAmt"></div>
+                                <div class="form-group amount-group"><label>Payment Status</label>
                                     <select id="f-payStatus"><option value="Pending">Pending</option><option value="Partially Paid">Partially Paid</option><option value="Paid">Fully Paid</option></select>
                                 </div>
                                 <div class="form-group full-width"><label>Album Status</label><input type="text" id="f-albumStatus" placeholder="N/A or Designing in Progress"></div>
                             </div>
                         </div>
 
-                        <div class="form-section">
+                        <!-- SUB-ADMINS / EDITORS CAN ONLY EDIT THIS SECTION -->
+                        <div class="form-section" style="border: 1px solid var(--primary-gold);">
                             <h3><i class="fa-brands fa-google-drive"></i> Deliverable Links (Drive/Storage)</h3>
                             <div class="form-grid">
                                 <div class="form-group"><label>Selected Photos</label><input type="url" id="f-link1"></div>
@@ -284,30 +315,29 @@
     <div id="toast"><i class="fa-solid fa-circle-check" style="color: var(--success-green);"></i> <span id="toast-msg">Saved Successfully</span></div>
 
     <script>
-        // HERE IS YOUR SPECIFIC WEB APP URL
         const GOOGLE_APP_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwtORGQF1M-YX0zOJKGcLH3pkWivoly2Oc-1DMFnWvV8QNOXvoufVPZde79fWUaMJk/exec";
 
-        // FIREBASE CONFIGURATION (Auth aur Database ke liye)
         const firebaseConfig = {
             apiKey: "AIzaSyDW2s0BuiUhr7Xv22gZUfqCpdbCqR_LbFc",
             authDomain: "harvishaclient-portal.firebaseapp.com",
             projectId: "harvishaclient-portal"
         };
         
-        // Primary App
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // Secondary App
         const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
         const secondaryAuth = secondaryApp.auth();
 
         let allClientsData = [];
         let isEditMode = false;
+        
+        let currentAdminEmail = "";
+        let currentAdminRole = ""; 
+
         const timelineLabels = ["0-Booking", "1-Shoot", "2-Editing", "3-Selection", "4-Album", "5-Printing", "6-Delivered"];
 
-        // ADMIN LOGIN PASSWORD VIEWER
         function toggleAdminPassword() {
             const passInput = document.getElementById("admin-password");
             const toggleIcon = document.getElementById("adminTogglePasswordIcon");
@@ -328,14 +358,42 @@
             const email = document.getElementById('admin-email').value;
             const pass = document.getElementById('admin-password').value;
             const statusBox = document.getElementById('login-status');
+            
             if(!email || !pass) { statusBox.innerText = "Please enter email and password."; return; }
             statusBox.style.color = "var(--primary-gold)"; statusBox.innerText = "Authenticating...";
+            
             try {
-                await auth.signInWithEmailAndPassword(email, pass);
+                const userCredential = await auth.signInWithEmailAndPassword(email, pass);
+                currentAdminEmail = userCredential.user.email;
+                
+                const adminDoc = await db.collection('admins').doc(currentAdminEmail).get();
+                
+                if (adminDoc.exists) {
+                    currentAdminRole = adminDoc.data().role; 
+                } else if (currentAdminEmail === 'admin@harvishapictures.com') {
+                    currentAdminRole = 'super_admin';
+                    await db.collection('admins').doc(currentAdminEmail).set({ email: currentAdminEmail, role: 'super_admin' });
+                } else {
+                    await auth.signOut();
+                    statusBox.style.color = "var(--danger-red)"; statusBox.innerText = "Access Denied. You are not an admin.";
+                    return;
+                }
+
+                document.getElementById('profile-name').innerText = currentAdminRole === 'super_admin' ? 'Super Admin' : 'Editor';
+                if(currentAdminRole === 'super_admin') {
+                    document.getElementById('menu-manage-admins').style.display = 'block';
+                    document.getElementById('btn-add-client').style.display = 'flex';
+                } else {
+                    document.getElementById('menu-manage-admins').style.display = 'none';
+                    document.getElementById('btn-add-client').style.display = 'none';
+                }
+
                 document.getElementById('admin-login-screen').style.display = 'none';
                 document.getElementById('admin-dashboard').style.display = 'flex';
                 fetchClients();
-            } catch (error) { statusBox.style.color = "var(--danger-red)"; statusBox.innerText = "Invalid Credentials."; }
+            } catch (error) { 
+                statusBox.style.color = "var(--danger-red)"; statusBox.innerText = "Invalid Credentials."; 
+            }
         }
         
         async function adminResetPassword() {
@@ -347,7 +405,6 @@
             catch (error) { statusBox.style.color = "var(--danger-red)"; statusBox.innerText = "Email not found."; }
         }
 
-        // SEND RESET LINK TO EXISTING CLIENT
         async function sendClientPasswordReset() {
             const email = document.getElementById('f-email').value;
             if(!email) return alert("Client Email is missing!");
@@ -362,9 +419,23 @@
         function adminLogout() { auth.signOut().then(() => window.location.reload()); }
 
         function switchView(viewName) {
-            document.getElementById('view-clients').classList.remove('active'); document.getElementById('view-editor').classList.remove('active');
-            if (viewName === 'clients') { document.getElementById('view-clients').classList.add('active'); fetchClients(); } 
-            else if (viewName === 'editor') { document.getElementById('view-editor').classList.add('active'); }
+            document.getElementById('view-clients').classList.remove('active'); 
+            document.getElementById('view-editor').classList.remove('active');
+            document.getElementById('view-admins').classList.remove('active');
+            
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
+
+            if (viewName === 'clients') { 
+                document.getElementById('view-clients').classList.add('active'); 
+                document.getElementById('nav-clients').classList.add('active');
+                fetchClients(); 
+            } else if (viewName === 'editor') { 
+                document.getElementById('view-editor').classList.add('active'); 
+            } else if (viewName === 'admins') {
+                document.getElementById('view-admins').classList.add('active');
+                document.getElementById('nav-admins').classList.add('active');
+                fetchAdmins();
+            }
         }
 
         async function fetchClients() {
@@ -379,13 +450,10 @@
         function renderTable(dataArray) {
             const tbody = document.getElementById('clients-table-body');
             tbody.innerHTML = "";
-            
             if(dataArray.length === 0) return tbody.innerHTML = `<tr><td colspan="5" style="text-align:center;">No clients found.</td></tr>`;
             
             dataArray.forEach(client => {
                 const stepIdx = client.currentStep || 0;
-                
-                // CHECK KAREIN KI ALBUM APPROVED HAI YA NAHI (Green Badge Dikhane ke liye)
                 const albumBadge = (client.albumStatus && client.albumStatus.includes('Approved')) 
                     ? `<br><span style="display:inline-block; margin-top:5px; background:#e6f4ea; color:#38a169; padding:3px 8px; border-radius:4px; font-size:10px;"><i class="fa-solid fa-check-double"></i> Album Approved</span>` 
                     : '';
@@ -433,15 +501,15 @@
         }
 
         function openCreateForm() {
+            if(currentAdminRole !== 'super_admin') return alert("Access Denied.");
             isEditMode = false;
             document.getElementById('editor-title').innerText = "Add New Client";
             document.getElementById('client-form').reset();
-            document.getElementById('f-email').disabled = false;
             
-            // Delete Button Hide Karein naye client banate time
+            toggleFormFields(false);
+            
+            document.getElementById('f-email').disabled = false;
             document.getElementById('delete-btn').style.display = 'none';
-
-            // Show Password Setup Field, Hide Reset Button
             document.getElementById('password-group').style.display = 'flex';
             document.getElementById('reset-password-group').style.display = 'none';
             document.getElementById('f-password').value = '';
@@ -459,12 +527,19 @@
             document.getElementById('f-email').value = client.id;
             document.getElementById('f-email').disabled = true; 
             
-            // Delete Button Show Karein edit karte time
-            document.getElementById('delete-btn').style.display = 'flex';
+            if(currentAdminRole === 'editor') {
+                toggleFormFields(true); 
+                document.getElementById('delete-btn').style.display = 'none';
+                document.getElementById('reset-password-group').style.display = 'none';
+                document.getElementById('editor-warning').style.display = 'block';
+            } else {
+                toggleFormFields(false); 
+                document.getElementById('delete-btn').style.display = 'flex';
+                document.getElementById('reset-password-group').style.display = 'flex';
+                document.getElementById('editor-warning').style.display = 'none';
+            }
 
-            // Hide Password Setup Field, Show Reset Button
             document.getElementById('password-group').style.display = 'none';
-            document.getElementById('reset-password-group').style.display = 'flex';
             
             document.getElementById('f-groom').value = client.groom || '';
             document.getElementById('f-bride').value = client.bride || '';
@@ -494,25 +569,39 @@
             switchView('editor');
         }
 
-        // ====== DELETE CLIENT LOGIC ======
+        function toggleFormFields(disable) {
+            const fields = ['f-groom', 'f-bride', 'f-package', 'f-bookDate', 'f-wedDate', 'f-delDate', 'f-currentStep', 'f-albumStatus'];
+            fields.forEach(id => {
+                document.getElementById(id).disabled = disable;
+            });
+            document.getElementById('f-coverImgUpload').disabled = disable;
+            if(disable) {
+                document.getElementById('upload-box-ui').style.opacity = '0.6';
+            } else {
+                document.getElementById('upload-box-ui').style.opacity = '1';
+            }
+            
+            // Sub-admin ko amount aur payment status hide karne ke liye
+            const amountGroups = document.querySelectorAll('.amount-group');
+            amountGroups.forEach(group => {
+                group.style.display = (currentAdminRole === 'editor') ? 'none' : 'flex';
+            });
+        }
+
         async function deleteClient() {
+            if(currentAdminRole !== 'super_admin') return;
             const emailId = document.getElementById('f-email').value;
             if (!emailId) return;
 
-            // Security check before deleting
             const confirmDelete = confirm(`Are you sure you want to permanently delete the client:\n${emailId}?\n\nThis action cannot be undone and they will lose access to their portal.`);
             
             if (confirmDelete) {
                 try {
                     document.getElementById('delete-btn').innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Deleting...';
-                    
-                    // Delete from Firestore Database
                     await db.collection('clients').doc(emailId).delete();
-                    
                     showToast("Client deleted successfully!");
-                    switchView('clients'); // Go back to table
+                    switchView('clients'); 
                 } catch (error) {
-                    console.error("Error deleting client: ", error);
                     alert("Error deleting client: " + error.message);
                 } finally {
                     document.getElementById('delete-btn').innerHTML = '<i class="fa-solid fa-trash"></i> Delete';
@@ -520,7 +609,6 @@
             }
         }
 
-        // ====== ACCOUNT CREATION & UPLOAD LOGIC ======
         async function saveClientData() {
             const emailId = document.getElementById('f-email').value.trim();
             if(!emailId) return alert("Client Email is required!");
@@ -530,85 +618,96 @@
             saveBtn.disabled = true;
 
             try {
-                // 1. AUTO-CREATE ACCOUNT WITH CUSTOM PASSWORD
-                if (!isEditMode) {
+                if (!isEditMode && currentAdminRole === 'super_admin') {
                     const password = document.getElementById('f-password').value;
                     if (password.length < 6) {
                         alert("Password must be at least 6 characters long!");
-                        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Client';
+                        saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Data';
                         saveBtn.disabled = false;
                         return;
                     }
                     try {
-                        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Auth Account...';
+                        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating Auth...';
                         await secondaryAuth.createUserWithEmailAndPassword(emailId, password);
-                        await secondaryAuth.signOut(); // Clean up session
+                        await secondaryAuth.signOut(); 
                     } catch (authError) {
                         if (authError.code !== 'auth/email-already-in-use') {
                             alert("Account Creation Error: " + authError.message);
-                            saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Client';
+                            saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Data';
                             saveBtn.disabled = false;
                             return;
                         }
                     }
                 }
 
-                // 2. SEND TO GOOGLE DRIVE VIA APPS SCRIPT
                 let finalImageUrl = document.getElementById('f-existingCoverImg').value;
-                const fileInput = document.getElementById('f-coverImgUpload');
+                if(currentAdminRole === 'super_admin') {
+                    const fileInput = document.getElementById('f-coverImgUpload');
+                    if (fileInput.files.length > 0) {
+                        saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image...';
+                        const file = fileInput.files[0];
+                        const base64String = await new Promise((resolve) => {
+                            const reader = new FileReader();
+                            reader.onload = () => resolve(reader.result.split(',')[1]);
+                            reader.readAsDataURL(file);
+                        });
 
-                if (fileInput.files.length > 0) {
-                    saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Uploading Image...';
-                    
-                    const file = fileInput.files[0];
-                    const base64String = await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onload = () => resolve(reader.result.split(',')[1]);
-                        reader.readAsDataURL(file);
-                    });
-
-                    const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
-                        method: "POST",
-                        body: JSON.stringify({
-                            filename: emailId + "_cover_" + file.name,
-                            mimeType: file.type,
-                            base64: base64String
-                        })
-                    });
-                    
-                    const result = await response.json();
-                    if (result.success) {
-                        finalImageUrl = result.url;
-                    } else {
-                        throw new Error("Drive Upload Failed: " + result.error);
+                        const response = await fetch(GOOGLE_APP_SCRIPT_URL, {
+                            method: "POST",
+                            body: JSON.stringify({
+                                filename: emailId + "_cover_" + file.name,
+                                mimeType: file.type,
+                                base64: base64String
+                            })
+                        });
+                        
+                        const result = await response.json();
+                        if (result.success) {
+                            finalImageUrl = result.url;
+                        } else {
+                            throw new Error("Drive Upload Failed: " + result.error);
+                        }
                     }
                 }
 
                 saveBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Database...';
 
-                // 3. SAVE DATA TO FIRESTORE
-                const clientData = {
-                    groom: document.getElementById('f-groom').value,
-                    bride: document.getElementById('f-bride').value,
-                    packageType: document.getElementById('f-package').value,
-                    coverImage: finalImageUrl,
-                    bookingDate: document.getElementById('f-bookDate').value,
-                    weddingDate: document.getElementById('f-wedDate').value,
-                    expectedDelivery: document.getElementById('f-delDate').value,
-                    currentStep: parseInt(document.getElementById('f-currentStep').value),
-                    totalAmount: parseInt(document.getElementById('f-totalAmt').value) || 0,
-                    paidAmount: parseInt(document.getElementById('f-paidAmt').value) || 0,
-                    balanceAmount: parseInt(document.getElementById('f-balAmt').value) || 0,
-                    paymentStatus: document.getElementById('f-payStatus').value,
-                    albumStatus: document.getElementById('f-albumStatus').value,
-                    linkSelectedPhotos: document.getElementById('f-link1').value,
-                    linkWeddingFilm: document.getElementById('f-link2').value,
-                    linkTeaser: document.getElementById('f-link3').value,
-                    linkFullGallery: document.getElementById('f-link4').value,
-                    linkFinalPhotos: document.getElementById('f-link5').value,
-                    linkAlbumPreview: document.getElementById('f-link6').value,
-                    linkFinalDelivery: document.getElementById('f-link7').value
-                };
+                let clientData = {};
+                
+                if (currentAdminRole === 'super_admin') {
+                    clientData = {
+                        groom: document.getElementById('f-groom').value,
+                        bride: document.getElementById('f-bride').value,
+                        packageType: document.getElementById('f-package').value,
+                        coverImage: finalImageUrl,
+                        bookingDate: document.getElementById('f-bookDate').value,
+                        weddingDate: document.getElementById('f-wedDate').value,
+                        expectedDelivery: document.getElementById('f-delDate').value,
+                        currentStep: parseInt(document.getElementById('f-currentStep').value),
+                        totalAmount: parseInt(document.getElementById('f-totalAmt').value) || 0,
+                        paidAmount: parseInt(document.getElementById('f-paidAmt').value) || 0,
+                        balanceAmount: parseInt(document.getElementById('f-balAmt').value) || 0,
+                        paymentStatus: document.getElementById('f-payStatus').value,
+                        albumStatus: document.getElementById('f-albumStatus').value,
+                        linkSelectedPhotos: document.getElementById('f-link1').value,
+                        linkWeddingFilm: document.getElementById('f-link2').value,
+                        linkTeaser: document.getElementById('f-link3').value,
+                        linkFullGallery: document.getElementById('f-link4').value,
+                        linkFinalPhotos: document.getElementById('f-link5').value,
+                        linkAlbumPreview: document.getElementById('f-link6').value,
+                        linkFinalDelivery: document.getElementById('f-link7').value
+                    };
+                } else {
+                    clientData = {
+                        linkSelectedPhotos: document.getElementById('f-link1').value,
+                        linkWeddingFilm: document.getElementById('f-link2').value,
+                        linkTeaser: document.getElementById('f-link3').value,
+                        linkFullGallery: document.getElementById('f-link4').value,
+                        linkFinalPhotos: document.getElementById('f-link5').value,
+                        linkAlbumPreview: document.getElementById('f-link6').value,
+                        linkFinalDelivery: document.getElementById('f-link7').value
+                    };
+                }
 
                 await db.collection('clients').doc(emailId).set(clientData, { merge: true });
                 showToast("Data saved successfully!");
@@ -618,8 +717,75 @@
                 console.error("Error saving document: ", error);
                 alert("Error saving data. Details: " + error.message);
             } finally {
-                saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Client';
+                saveBtn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Save Data';
                 saveBtn.disabled = false;
+            }
+        }
+
+        async function fetchAdmins() {
+            try {
+                const snapshot = await db.collection('admins').get();
+                const tbody = document.getElementById('admins-table-body');
+                tbody.innerHTML = "";
+                
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const badgeClass = data.role === 'super_admin' ? 'role-super' : 'role-editor';
+                    const displayRole = data.role === 'super_admin' ? 'Super Admin' : 'Editor';
+                    
+                    const deleteBtn = (data.role !== 'super_admin' || doc.id !== 'admin@harvishapictures.com') 
+                        ? `<button class="btn-danger" style="padding: 4px 8px; font-size:11px;" onclick="deleteAdmin('${doc.id}')">Remove</button>` 
+                        : `<span style="font-size:10px; color:var(--text-muted);">Main Admin</span>`;
+
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td><strong>${doc.id}</strong></td>
+                        <td><span class="role-badge ${badgeClass}">${displayRole}</span></td>
+                        <td>${deleteBtn}</td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (error) { console.error(error); }
+        }
+
+        async function createSubAdmin() {
+            const email = document.getElementById('new-admin-email').value.trim();
+            const password = document.getElementById('new-admin-password').value;
+            const btn = document.getElementById('btn-add-admin');
+
+            if(!email || password.length < 6) return alert("Enter valid email and at least 6 char password.");
+            
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+            btn.disabled = true;
+
+            try {
+                await secondaryAuth.createUserWithEmailAndPassword(email, password);
+                await secondaryAuth.signOut();
+                
+                await db.collection('admins').doc(email).set({ email: email, role: 'editor' });
+                
+                showToast("Sub-Admin created successfully!");
+                document.getElementById('new-admin-email').value = "";
+                document.getElementById('new-admin-password').value = "";
+                fetchAdmins();
+            } catch (error) {
+                alert("Error creating admin: " + error.message);
+            } finally {
+                btn.innerHTML = 'Create Sub-Admin';
+                btn.disabled = false;
+            }
+        }
+
+        async function deleteAdmin(email) {
+            const confirmDel = confirm(`Are you sure you want to remove admin access for ${email}?`);
+            if (confirmDel) {
+                try {
+                    await db.collection('admins').doc(email).delete();
+                    showToast("Admin removed from database.");
+                    fetchAdmins();
+                } catch(e) {
+                    alert("Error: " + e.message);
+                }
             }
         }
 
