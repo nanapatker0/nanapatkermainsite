@@ -170,7 +170,11 @@
                         <input type="text" id="search-input" placeholder="Search clients..." onkeyup="filterClients()">
                     </div>
                 </div>
-                <div class="admin-profile"><span id="profile-name">Welcome</span><div class="avatar">H</div></div>
+                <!-- Profile Section -->
+                <div class="admin-profile">
+                    <span id="profile-name">Welcome</span>
+                    <div class="avatar" id="profile-avatar">H</div>
+                </div>
             </header>
 
             <div class="workspace">
@@ -197,7 +201,10 @@
                     <div class="form-section">
                         <h3><i class="fa-solid fa-user-plus"></i> Add Sub-Admin (Editor)</h3>
                         <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 15px;">Editors can only view client list and update Deliverable Links. They cannot add clients, delete clients, or view/edit payment details.</p>
+                        
+                        <!-- ADDED NAME FIELD HERE -->
                         <div class="form-grid" style="align-items: end;">
+                            <div class="form-group"><label>Admin Name</label><input type="text" id="new-admin-name" placeholder="e.g. Rahul"></div>
                             <div class="form-group"><label>Admin Email</label><input type="email" id="new-admin-email" placeholder="editor@harvishapictures.com"></div>
                             <div class="form-group"><label>Password (Min 6 char)</label><input type="text" id="new-admin-password" placeholder="e.g. Editor@123"></div>
                             <div class="form-group"><button class="btn-primary" id="btn-add-admin" onclick="createSubAdmin()">Create Sub-Admin</button></div>
@@ -206,8 +213,9 @@
 
                     <div class="client-table-container">
                         <table>
-                            <thead><tr><th>Admin Email</th><th>Role</th><th>Actions</th></tr></thead>
-                            <tbody id="admins-table-body"><tr><td colspan="3" style="text-align: center;">Loading admins...</td></tr></tbody>
+                            <!-- ADDED NAME COLUMN HERE -->
+                            <thead><tr><th>Name</th><th>Admin Email</th><th>Role</th><th>Actions</th></tr></thead>
+                            <tbody id="admins-table-body"><tr><td colspan="4" style="text-align: center;">Loading admins...</td></tr></tbody>
                         </table>
                     </div>
                 </div>
@@ -282,7 +290,6 @@
                         <div class="form-section">
                             <h3><i class="fa-solid fa-wallet"></i> Payments & Album Status</h3>
                             <div class="form-grid">
-                                <!-- AMOUNT GROUPS: Added 'amount-group' class to hide them from sub-admins -->
                                 <div class="form-group amount-group"><label>Total Amount</label><input type="number" id="f-totalAmt"></div>
                                 <div class="form-group amount-group"><label>Paid Amount</label><input type="number" id="f-paidAmt"></div>
                                 <div class="form-group amount-group"><label>Balance Amount</label><input type="number" id="f-balAmt"></div>
@@ -368,18 +375,27 @@
                 
                 const adminDoc = await db.collection('admins').doc(currentAdminEmail).get();
                 
+                let displayName = "Admin";
+
                 if (adminDoc.exists) {
                     currentAdminRole = adminDoc.data().role; 
+                    // DATABASE SE NAAM NIKAL RAHE HAI
+                    displayName = adminDoc.data().name || (currentAdminRole === 'super_admin' ? 'Harsh' : 'Editor');
                 } else if (currentAdminEmail === 'pandeyharshvardhan568@gmail.com') {
                     currentAdminRole = 'super_admin';
-                    await db.collection('admins').doc(currentAdminEmail).set({ email: currentAdminEmail, role: 'super_admin' });
+                    displayName = 'Harsh';
+                    await db.collection('admins').doc(currentAdminEmail).set({ email: currentAdminEmail, name: displayName, role: 'super_admin' });
                 } else {
                     await auth.signOut();
                     statusBox.style.color = "var(--danger-red)"; statusBox.innerText = "Access Denied. You are not an admin.";
                     return;
                 }
 
-                document.getElementById('profile-name').innerText = currentAdminRole === 'super_admin' ? 'Super Admin' : 'Editor';
+                // UI ME NAAM UPDATE
+                document.getElementById('profile-name').innerText = "Welcome, " + displayName;
+                // AVATAR ME FIRST LETTER
+                document.getElementById('profile-avatar').innerText = displayName.charAt(0).toUpperCase();
+
                 if(currentAdminRole === 'super_admin') {
                     document.getElementById('menu-manage-admins').style.display = 'block';
                     document.getElementById('btn-add-client').style.display = 'flex';
@@ -581,7 +597,6 @@
                 document.getElementById('upload-box-ui').style.opacity = '1';
             }
             
-            // Sub-admin ko amount aur payment status hide karne ke liye
             const amountGroups = document.querySelectorAll('.amount-group');
             amountGroups.forEach(group => {
                 group.style.display = (currentAdminRole === 'editor') ? 'none' : 'flex';
@@ -733,13 +748,14 @@
                     const badgeClass = data.role === 'super_admin' ? 'role-super' : 'role-editor';
                     const displayRole = data.role === 'super_admin' ? 'Super Admin' : 'Editor';
                     
-                    const deleteBtn = (data.role !== 'super_admin' || doc.id !== 'admin@harvishapictures.com') 
+                    const deleteBtn = (data.role !== 'super_admin' || doc.id !== 'pandeyharshvardhan568@gmail.com') 
                         ? `<button class="btn-danger" style="padding: 4px 8px; font-size:11px;" onclick="deleteAdmin('${doc.id}')">Remove</button>` 
                         : `<span style="font-size:10px; color:var(--text-muted);">Main Admin</span>`;
 
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td><strong>${doc.id}</strong></td>
+                        <td><strong>${data.name || 'N/A'}</strong></td>
+                        <td>${doc.id}</td>
                         <td><span class="role-badge ${badgeClass}">${displayRole}</span></td>
                         <td>${deleteBtn}</td>
                     `;
@@ -749,11 +765,12 @@
         }
 
         async function createSubAdmin() {
+            const name = document.getElementById('new-admin-name').value.trim();
             const email = document.getElementById('new-admin-email').value.trim();
             const password = document.getElementById('new-admin-password').value;
             const btn = document.getElementById('btn-add-admin');
 
-            if(!email || password.length < 6) return alert("Enter valid email and at least 6 char password.");
+            if(!name || !email || password.length < 6) return alert("Enter valid name, email and at least 6 char password.");
             
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
             btn.disabled = true;
@@ -762,9 +779,10 @@
                 await secondaryAuth.createUserWithEmailAndPassword(email, password);
                 await secondaryAuth.signOut();
                 
-                await db.collection('admins').doc(email).set({ email: email, role: 'editor' });
+                await db.collection('admins').doc(email).set({ email: email, name: name, role: 'editor' });
                 
                 showToast("Sub-Admin created successfully!");
+                document.getElementById('new-admin-name').value = "";
                 document.getElementById('new-admin-email').value = "";
                 document.getElementById('new-admin-password').value = "";
                 fetchAdmins();
