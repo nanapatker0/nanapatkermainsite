@@ -136,6 +136,13 @@
     transition: color 0.3s ease;
 }
 
+        /* NEW HEADER RIGHT CONTAINER */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
 /* Active page */
 nav a.active {
     color: #d4af37 !important;
@@ -174,16 +181,19 @@ nav a:hover {
     color: #d4af37 !important;
 }
 
-/* Mobile adjustments */
-@media (max-width: 1024px) {
-    .nav-login-btn {
-        margin-left: 0;
-        margin-top: 15px;
-        padding: 10px 30px 10px 24px;
-        font-size: 14px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Slightly stronger shadow on mobile */
-    }
-}
+/* Mobile adjustments for Login Button */
+        @media (max-width: 1024px) {
+            .header-right {
+                gap: 12px;
+            }
+            .nav-login-btn {
+                margin-left: 0;
+                margin-top: 0; /* Changed from 15px to 0 */
+                padding: 8px 16px 8px 12px; /* Smaller padding to fit beside hamburger */
+                font-size: 12px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+            }
+        }
         .menu-toggle {
             display: none;
             cursor: pointer;
@@ -1461,21 +1471,26 @@ nav a:hover {
             <img src="images/logo.png" alt="Harvisha Pictures Logo">
         </a>
         
-        <div class="menu-toggle" id="mobile-menu">
-            <span class="bar"></span>
-            <span class="bar"></span>
-            <span class="bar"></span>
-        </div>
-
-        <nav id="nav-menu">
-            <a href="./" class="active">Home</a>
-            <a href="./eventservicescoming/">Event Services</a>
-            <a href="./makeupservices/">Makeup Services</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#about">About</a>
-            <a href="#footer">Contact</a>
+        <!-- NEW HEADER RIGHT WRAPPER -->
+        <div class="header-right">
+            <nav id="nav-menu">
+                <a href="./" class="active">Home</a>
+                <a href="./eventservicescoming/">Event Services</a>
+                <a href="./makeupservices/">Makeup Services</a>
+                <a href="#portfolio">Portfolio</a>
+                <a href="#about">About</a>
+                <a href="#footer">Contact</a>
+            </nav>
+            
+            <!-- Login Button Moved Outside Nav -->
             <a href="./clientlogin/" class="nav-login-btn"><i class="fa-regular fa-circle-user"></i> Login</a> 
-        </nav>
+            
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
     </header>
 
     <section class="hero">
