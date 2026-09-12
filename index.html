@@ -146,25 +146,29 @@ nav a:hover {
     color: #777;
 }
 
-/* Apple-Style Pill Login Button */
 .nav-login-btn {
-    background-color: #000000;
+    background-color: #111111;
     color: #ffffff !important;
-    padding: 7px 22px;
-    border-radius: 9999px; /* Creates the perfect pill shape */
-    font-size: 12px;
+    padding: 8px 24px;
+    border-radius: 9999px; /* Perfect pill shape */
+    font-size: 13px;
     font-weight: 500;
-    text-transform: none; /* Overrides the uppercase nav links for a modern look */
+    text-transform: none; /* Keeps it modern and sleek */
     letter-spacing: 0.5px;
+    border: 1px solid transparent; 
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: background-color 0.2s ease, opacity 0.2s ease;
+    /* High-end smooth easing for the animation */
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .nav-login-btn:hover {
-    background-color: #333333; /* Subtle lightening on hover like Apple's site */
-    color: #ffffff !important;
+    background-color: #000000;
+    color: #d4af37 !important; /* Transitions to luxury gold text */
+    border: 1px solid rgba(212, 175, 55, 0.6); /* Delicate gold outline */
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15); /* Faint VIP glow */
+    transform: translateY(-2px);
 }
 
 /* Mobile adjustments */
