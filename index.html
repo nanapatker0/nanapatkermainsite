@@ -146,29 +146,32 @@ nav a:hover {
     color: #777;
 }
 
+/* Option 6.5: Golden Glow Login Button */
 .nav-login-btn {
-    background-color: #111111;
-    color: #ffffff !important;
-    padding: 8px 24px;
-    border-radius: 9999px; /* Perfect pill shape */
+    background-color: #ffffff;
+    color: #111111 !important;
+    padding: 8px 24px 8px 20px;
+    border-radius: 25px;
     font-size: 13px;
-    font-weight: 500;
-    text-transform: none; /* Keeps it modern and sleek */
-    letter-spacing: 0.5px;
-    border: 1px solid transparent; 
+    font-weight: 600;
+    text-transform: capitalize;
     display: inline-flex;
     align-items: center;
-    justify-content: center;
-    /* High-end smooth easing for the animation */
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    gap: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+    transition: all 0.3s ease;
+}
+
+.nav-login-btn i {
+    color: #d4af37;
+    font-size: 15px;
+    transition: color 0.3s ease;
 }
 
 .nav-login-btn:hover {
-    background-color: #000000;
-    color: #d4af37 !important; /* Transitions to luxury gold text */
-    border: 1px solid rgba(212, 175, 55, 0.6); /* Delicate gold outline */
-    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.15); /* Faint VIP glow */
+    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.25);
     transform: translateY(-2px);
+    color: #d4af37 !important;
 }
 
 /* Mobile adjustments */
@@ -176,8 +179,9 @@ nav a:hover {
     .nav-login-btn {
         margin-left: 0;
         margin-top: 15px;
-        padding: 10px 32px;
+        padding: 10px 30px 10px 24px;
         font-size: 14px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1); /* Slightly stronger shadow on mobile */
     }
 }
         .menu-toggle {
@@ -1470,7 +1474,7 @@ nav a:hover {
             <a href="#portfolio">Portfolio</a>
             <a href="#about">About</a>
             <a href="#footer">Contact</a>
-            <a href="./clientlogin/" class="nav-login-btn">Login</a>
+            <a href="./clientlogin/" class="nav-login-btn"><i class="fa-regular fa-circle-user"></i> Login</a> 
         </nav>
     </header>
 
