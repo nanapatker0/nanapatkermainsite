@@ -146,32 +146,34 @@ nav a:hover {
     color: #777;
 }
 
+/* Apple-Style Pill Login Button */
 .nav-login-btn {
-    background-color: #111111;
+    background-color: #000000;
     color: #ffffff !important;
-    padding: 8px 20px;
-    border-radius: 25px;
-    border: 1px solid #111111;
-    transition: all 0.3s ease;
+    padding: 7px 22px;
+    border-radius: 9999px; /* Creates the perfect pill shape */
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: none; /* Overrides the uppercase nav links for a modern look */
+    letter-spacing: 0.5px;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
 }
 
 .nav-login-btn:hover {
-    background-color: #d4af37;
-    border-color: #d4af37;
-    color: #111111 !important;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    background-color: #333333; /* Subtle lightening on hover like Apple's site */
+    color: #ffffff !important;
 }
 
-/* Mobile adjustments for the login button */
+/* Mobile adjustments */
 @media (max-width: 1024px) {
     .nav-login-btn {
         margin-left: 0;
-        margin-top: 10px;
-        padding: 12px 28px;
+        margin-top: 15px;
+        padding: 10px 32px;
+        font-size: 14px;
     }
 }
         .menu-toggle {
@@ -1464,7 +1466,7 @@ nav a:hover {
             <a href="#portfolio">Portfolio</a>
             <a href="#about">About</a>
             <a href="#footer">Contact</a>
-            <a href="./clientlogin/" class="nav-login-btn"><i class="fa-solid fa-user"></i> Client Login</a>
+            <a href="./clientlogin/" class="nav-login-btn">Login</a>
         </nav>
     </header>
 
