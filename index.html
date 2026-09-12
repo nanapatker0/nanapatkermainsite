@@ -146,7 +146,34 @@ nav a:hover {
     color: #777;
 }
 
+.nav-login-btn {
+    background-color: #111111;
+    color: #ffffff !important;
+    padding: 8px 20px;
+    border-radius: 25px;
+    border: 1px solid #111111;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
 
+.nav-login-btn:hover {
+    background-color: #d4af37;
+    border-color: #d4af37;
+    color: #111111 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+}
+
+/* Mobile adjustments for the login button */
+@media (max-width: 1024px) {
+    .nav-login-btn {
+        margin-left: 0;
+        margin-top: 10px;
+        padding: 12px 28px;
+    }
+}
         .menu-toggle {
             display: none;
             cursor: pointer;
@@ -1437,6 +1464,7 @@ nav a:hover {
             <a href="#portfolio">Portfolio</a>
             <a href="#about">About</a>
             <a href="#footer">Contact</a>
+            <a href="./clientlogin/" class="nav-login-btn"><i class="fa-solid fa-user"></i> Client Login</a>
         </nav>
     </header>
 
