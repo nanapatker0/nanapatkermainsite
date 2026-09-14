@@ -88,7 +88,7 @@
     </script>
 
     <style>
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Montserrat',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(-45deg,#050505,#111,#1a1505,#0a0a0a);background-size:400% 400%;animation:liquidFluid 15s ease infinite}@keyframes liquidFluid{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}header{position:fixed;top:0;width:100%;background:rgba(10,10,10,.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:15px 5%;display:flex;justify-content:space-between;align-items:center;z-index:1000;border-bottom:1px solid rgba(255,255,255,.05);box-shadow:0 4px 30px rgba(0,0,0,.5)}.logo img{max-height:40px}.back-btn{color:#d4af37;font-size:13px;text-transform:uppercase;font-weight:600;letter-spacing:1px;text-decoration:none;display:flex;align-items:center;gap:8px;transition:all .3s ease;padding:8px 16px;border-radius:20px;background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.2)}.back-btn:hover{color:#fff;background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.5);box-shadow:0 0 15px rgba(212,175,55,.2)}.page-header{padding:140px 5% 50px;text-align:center;position:relative;z-index:10}.page-header h1{font-family:"Playfair Display",serif;font-size:52px;background:linear-gradient(to right,#d4af37,#f3e5ab,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:15px;text-shadow:0 4px 20px rgba(212,175,55,.2)}.page-header p{color:rgba(255,255,255,.7);font-size:15px;letter-spacing:3px;text-transform:uppercase}.filter-container{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;padding:0 5% 50px;position:relative;z-index:10}.filter-btn{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.08);padding:12px 28px;border-radius:30px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;transition:all .4s cubic-bezier(.25,.8,.25,1);box-shadow:0 4px 15px rgba(0,0,0,.2)}.filter-btn:hover{background:rgba(255,255,255,.1);color:#fff;transform:translateY(-2px)}.filter-btn.active{background:rgba(212,175,55,.15);color:#d4af37;border-color:rgba(212,175,55,.4);box-shadow:0 8px 25px rgba(212,175,55,.2)}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:25px;padding:0 5% 80px;max-width:1400px;margin:0 auto;position:relative;z-index:10}.gallery-item{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/5;cursor:pointer;opacity:1;transform:scale(1);transition:all .5s cubic-bezier(.25,.8,.25,1);background:rgba(255,255,255,.02);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.1);border-left:1px solid rgba(255,255,255,.1);box-shadow:0 8px 32px 0 rgba(0,0,0,.3)}.gallery-item.hidden{display:none}.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;opacity:.95;user-select:none}.gallery-item:hover{transform:translateY(-8px);border-color:rgba(212,175,55,.3);box-shadow:0 15px 45px 0 rgba(0,0,0,.6),0 0 20px rgba(212,175,55,.15)}.gallery-item:hover img{transform:scale(1.1);opacity:1}.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9),transparent 60%);opacity:0;transition:opacity .4s ease;display:flex;align-items:flex-end;padding:25px}.gallery-item:hover .gallery-overlay{opacity:1}.overlay-icon{color:#d4af37;font-size:24px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.5));transform:translateY(15px);transition:transform .4s ease}.gallery-item:hover .overlay-icon{transform:translateY(0)}.lightbox{position:fixed;inset:0;background:rgba(5,5,5,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:2000;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .4s ease}.lightbox.active{opacity:1;pointer-events:auto}.lightbox img{max-width:90%;max-height:90vh;border-radius:12px;box-shadow:0 25px 60px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1);transform:scale(.9);opacity:0;transition:transform .3s cubic-bezier(.25,1,.5,1),opacity .3s ease;user-select:none}.lightbox.active img{transform:scale(1);opacity:1}.lightbox-control{position:absolute;color:rgba(255,255,255,.6);display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .3s ease;z-index:2010}.lightbox-control:hover{color:#111;background:#d4af37;border-color:#d4af37;box-shadow:0 0 20px rgba(212,175,55,.4)}.lightbox-close{top:30px;right:30px;font-size:30px;width:50px;height:50px}.lightbox-close:hover{transform:rotate(90deg)}.lightbox-nav{top:50%;transform:translateY(-50%);width:60px;height:60px;font-size:24px}.lightbox-prev{left:30px}.lightbox-next{right:30px}.lightbox-nav:active{transform:translateY(-50%) scale(.9)}@media (max-width:1024px){.lightbox-nav{display:none!important}}@media (max-width:768px){.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}.page-header h1{font-size:38px}.filter-btn{padding:10px 18px;font-size:10px}.lightbox-close{top:15px;right:15px;width:40px;height:40px;font-size:24px}}
+        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Montserrat',sans-serif;color:#fff;overflow-x:hidden;background:linear-gradient(-45deg,#050505,#111,#1a1505,#0a0a0a);background-size:400% 400%;animation:liquidFluid 15s ease infinite}@keyframes liquidFluid{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}header{position:fixed;top:0;width:100%;background:rgba(10,10,10,.4);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);padding:15px 5%;display:flex;justify-content:space-between;align-items:center;z-index:1000;border-bottom:1px solid rgba(255,255,255,.05);box-shadow:0 4px 30px rgba(0,0,0,.5)}.logo img{max-height:40px}.back-btn{color:#d4af37;font-size:13px;text-transform:uppercase;font-weight:600;letter-spacing:1px;text-decoration:none;display:flex;align-items:center;gap:8px;transition:all .3s ease;padding:8px 16px;border-radius:20px;background:rgba(212,175,55,.05);border:1px solid rgba(212,175,55,.2)}.back-btn:hover{color:#fff;background:rgba(212,175,55,.2);border-color:rgba(212,175,55,.5);box-shadow:0 0 15px rgba(212,175,55,.2)}.page-header{padding:140px 5% 50px;text-align:center;position:relative;z-index:10}.page-header h1{font-family:"Playfair Display",serif;font-size:52px;background:linear-gradient(to right,#d4af37,#f3e5ab,#d4af37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:15px;text-shadow:0 4px 20px rgba(212,175,55,.2)}.page-header p{color:rgba(255,255,255,.7);font-size:15px;letter-spacing:3px;text-transform:uppercase}.filter-container{display:flex;justify-content:center;flex-wrap:wrap;gap:15px;padding:0 5% 50px;position:relative;z-index:10}.filter-btn{background:rgba(255,255,255,.03);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.08);padding:12px 28px;border-radius:30px;font-family:'Montserrat',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:1.5px;cursor:pointer;transition:all .4s cubic-bezier(.25,.8,.25,1);box-shadow:0 4px 15px rgba(0,0,0,.2)}.filter-btn:hover{background:rgba(255,255,255,.1);color:#fff;transform:translateY(-2px)}.filter-btn.active{background:rgba(212,175,55,.15);color:#d4af37;border-color:rgba(212,175,55,.4);box-shadow:0 8px 25px rgba(212,175,55,.2)}.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:25px;padding:0 5% 80px;max-width:1400px;margin:0 auto;position:relative;z-index:10}.gallery-item{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:4/5;cursor:pointer;opacity:1;transform:scale(1);transition:all .5s cubic-bezier(.25,.8,.25,1);background:rgba(255,255,255,.02);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.05);border-top:1px solid rgba(255,255,255,.1);border-left:1px solid rgba(255,255,255,.1);box-shadow:0 8px 32px 0 rgba(0,0,0,.3)}.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .8s ease;opacity:.95;user-select:none}.gallery-item:hover{transform:translateY(-8px);border-color:rgba(212,175,55,.3);box-shadow:0 15px 45px 0 rgba(0,0,0,.6),0 0 20px rgba(212,175,55,.15)}.gallery-item:hover img{transform:scale(1.1);opacity:1}.gallery-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.9),transparent 60%);opacity:0;transition:opacity .4s ease;display:flex;align-items:flex-end;padding:25px}.gallery-item:hover .gallery-overlay{opacity:1}.overlay-icon{color:#d4af37;font-size:24px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.5));transform:translateY(15px);transition:transform .4s ease}.gallery-item:hover .overlay-icon{transform:translateY(0)}.lightbox{position:fixed;inset:0;background:rgba(5,5,5,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);z-index:2000;display:flex;justify-content:center;align-items:center;opacity:0;pointer-events:none;transition:opacity .4s ease}.lightbox.active{opacity:1;pointer-events:auto}.lightbox img{max-width:90%;max-height:90vh;border-radius:12px;box-shadow:0 25px 60px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.1);transform:scale(.9);opacity:0;transition:transform .3s cubic-bezier(.25,1,.5,1),opacity .3s ease;user-select:none}.lightbox.active img{transform:scale(1);opacity:1}.lightbox-control{position:absolute;color:rgba(255,255,255,.6);display:flex;justify-content:center;align-items:center;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .3s ease;z-index:2010}.lightbox-control:hover{color:#111;background:#d4af37;border-color:#d4af37;box-shadow:0 0 20px rgba(212,175,55,.4)}.lightbox-close{top:30px;right:30px;font-size:30px;width:50px;height:50px}.lightbox-close:hover{transform:rotate(90deg)}.lightbox-nav{top:50%;transform:translateY(-50%);width:60px;height:60px;font-size:24px}.lightbox-prev{left:30px}.lightbox-next{right:30px}.lightbox-nav:active{transform:translateY(-50%) scale(.9)}@media (max-width:1024px){.lightbox-nav{display:none!important}}@media (max-width:768px){.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:15px}.page-header h1{font-size:38px}.filter-btn{padding:10px 18px;font-size:10px}.lightbox-close{top:15px;right:15px;width:40px;height:40px;font-size:24px}}
     </style>
 </head>
 <body>
@@ -109,8 +109,7 @@
         </section>
 
         <nav class="filter-container" id="filter-buttons" aria-label="Gallery Filters">
-            <button class="filter-btn active" data-filter="all">All</button>
-            <button class="filter-btn" data-filter="wedding">Wedding</button>
+            <button class="filter-btn active" data-filter="wedding">Wedding</button>
             <button class="filter-btn" data-filter="prewedding">Pre-Wedding</button>
             <button class="filter-btn" data-filter="anniversary">Anniversary</button>
             <button class="filter-btn" data-filter="engagement">Engagement</button>
@@ -118,7 +117,7 @@
         </nav>
 
         <div class="gallery-grid" id="gallery-container">
-            <!-- Images will be injected here automatically -->
+            <!-- Images will load here dynamically based on the active tab -->
         </div>
     </main>
 
@@ -136,34 +135,33 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const portfolioData = [
-            {category: 'wedding', folder: 'Wedding', prefix: 'wedding'},
-            {category: 'prewedding', folder: 'Prewedding', prefix: 'prewedding'},
-            {category: 'anniversary', folder: 'Anniversary', prefix: 'anniversary'},
-            {category: 'engagement', folder: 'Engagement', prefix: 'engagement'},
-            {category: 'maternity', folder: 'Maternity', prefix: 'maternity'}
-        ];
-        
-        const galleryContainer = document.getElementById('gallery-container');
-        
-        // Yahan MAX_IMAGES limit set karein. 
-        // Agar aapki highest image (48) hai, toh isko 60 ya 80 rakh sakte hain taaki future images cover ho jayein.
-        const MAX_IMAGES = 80; 
+        document.addEventListener('DOMContentLoaded', () => {
+            const portfolioData = {
+                wedding: { folder: 'Wedding', prefix: 'wedding' },
+                prewedding: { folder: 'Prewedding', prefix: 'prewedding' },
+                anniversary: { folder: 'Anniversary', prefix: 'anniversary' },
+                engagement: { folder: 'Engagement', prefix: 'engagement' },
+                maternity: { folder: 'Maternity', prefix: 'maternity' }
+            };
+            
+            const galleryContainer = document.getElementById('gallery-container');
+            
+            // Adjust this number if you upload images beyond (100)
+            const MAX_IMAGES = 100; 
 
-        function loadGalleryFast() {
-            // Upar se neeche loop (Newest First k liye)
-            for (let i = MAX_IMAGES; i >= 1; i--) {
-                // Har category se 1-1 image uthayenge (Round-Robin Mixing)
-                for (const data of portfolioData) {
+            function loadCategory(categoryKey) {
+                galleryContainer.innerHTML = ''; 
+                const data = portfolioData[categoryKey];
+                
+                // Reverse loop loads newest images first
+                for (let i = MAX_IMAGES; i >= 1; i--) {
                     const imagePath = `../our portfolio/${data.folder}/${data.prefix} (${i}).jpg`;
                     
                     const itemDiv = document.createElement('div');
-                    itemDiv.className = `gallery-item ${data.category}`;
-                    itemDiv.setAttribute('data-category', data.category);
+                    itemDiv.className = `gallery-item ${categoryKey}`;
+                    itemDiv.setAttribute('data-category', categoryKey);
                     
-                    // MAGIC STEP: onerror="this.parentElement.remove()"
-                    // Agar image nahi mili (jaise number 75 nahi h), toh wo empty box turant delete ho jayega.
+                    // onerror handles missing numbers instantly without breaking the gallery
                     itemDiv.innerHTML = `
                         <img src="${imagePath}" 
                              alt="Harvisha Pictures ${data.folder} Photography in Kolkata ${i}" 
@@ -176,119 +174,110 @@
                     galleryContainer.appendChild(itemDiv);
                 }
             }
-        }
-        
-        // Turant gallery render karein (No waiting)
-        loadGalleryFast();
+            
+            // Load Wedding by default on page open
+            loadCategory('wedding');
 
-        // --- FILTER LOGIC ---
-        const filterBtns = document.querySelectorAll('.filter-btn');
-        filterBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                filterBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                const filterValue = btn.getAttribute('data-filter');
-                const allGalleryItems = document.querySelectorAll('.gallery-item');
-                
-                allGalleryItems.forEach(item => {
-                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                        item.classList.remove('hidden');
-                    } else {
-                        item.classList.add('hidden');
-                    }
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('active')) return;
+
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    const filterValue = btn.getAttribute('data-filter');
+                    loadCategory(filterValue);
                 });
             });
-        });
 
-        // --- LIGHTBOX LOGIC ---
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxClose = document.getElementById('lightbox-close');
-        const btnNext = document.getElementById('lightbox-next');
-        const btnPrev = document.getElementById('lightbox-prev');
-        let currentVisibleItems = [];
-        let currentIndex = 0;
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const lightboxClose = document.getElementById('lightbox-close');
+            const btnNext = document.getElementById('lightbox-next');
+            const btnPrev = document.getElementById('lightbox-prev');
+            let currentVisibleItems = [];
+            let currentIndex = 0;
 
-        galleryContainer.addEventListener('click', (e) => {
-            const item = e.target.closest('.gallery-item');
-            if (item) {
-                currentVisibleItems = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
-                currentIndex = currentVisibleItems.indexOf(item);
+            galleryContainer.addEventListener('click', (e) => {
+                const item = e.target.closest('.gallery-item');
+                if (item) {
+                    currentVisibleItems = Array.from(galleryContainer.querySelectorAll('.gallery-item'));
+                    currentIndex = currentVisibleItems.indexOf(item);
+                    updateLightboxImage();
+                    lightbox.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            function updateLightboxImage() {
+                if (currentVisibleItems.length === 0) return;
+                lightboxImg.style.opacity = '0';
+                setTimeout(() => {
+                    const imgSrc = currentVisibleItems[currentIndex].querySelector('img').src;
+                    lightboxImg.src = imgSrc;
+                    lightboxImg.style.opacity = '1';
+                }, 150);
+            }
+
+            function showNext(e) {
+                if (e) e.stopPropagation();
+                if (currentVisibleItems.length <= 1) return;
+                currentIndex = (currentIndex + 1) % currentVisibleItems.length;
                 updateLightboxImage();
-                lightbox.classList.add('active');
-                document.body.style.overflow = 'hidden';
+            }
+
+            function showPrev(e) {
+                if (e) e.stopPropagation();
+                if (currentVisibleItems.length <= 1) return;
+                currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
+                updateLightboxImage();
+            }
+
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                setTimeout(() => lightboxImg.src = "", 400);
+            }
+
+            btnNext.addEventListener('click', showNext);
+            btnPrev.addEventListener('click', showPrev);
+            lightboxClose.addEventListener('click', closeLightbox);
+            
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) closeLightbox();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                if (e.key === 'ArrowRight') showNext();
+                else if (e.key === 'ArrowLeft') showPrev();
+                else if (e.key === 'Escape') closeLightbox();
+            });
+
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            lightbox.addEventListener('touchstart', e => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, {passive: true});
+            
+            lightbox.addEventListener('touchend', e => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, {passive: true});
+
+            function handleSwipe() {
+                const swipeThreshold = 50;
+                if (touchEndX < touchStartX - swipeThreshold) {
+                    showNext();
+                }
+                if (touchEndX > touchStartX + swipeThreshold) {
+                    showPrev();
+                }
             }
         });
-
-        function updateLightboxImage() {
-            if (currentVisibleItems.length === 0) return;
-            lightboxImg.style.opacity = '0';
-            setTimeout(() => {
-                const imgSrc = currentVisibleItems[currentIndex].querySelector('img').src;
-                lightboxImg.src = imgSrc;
-                lightboxImg.style.opacity = '1';
-            }, 150);
-        }
-
-        function showNext(e) {
-            if (e) e.stopPropagation();
-            if (currentVisibleItems.length <= 1) return;
-            currentIndex = (currentIndex + 1) % currentVisibleItems.length;
-            updateLightboxImage();
-        }
-
-        function showPrev(e) {
-            if (e) e.stopPropagation();
-            if (currentVisibleItems.length <= 1) return;
-            currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
-            updateLightboxImage();
-        }
-
-        function closeLightbox() {
-            lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            setTimeout(() => lightboxImg.src = "", 400);
-        }
-
-        btnNext.addEventListener('click', showNext);
-        btnPrev.addEventListener('click', showPrev);
-        lightboxClose.addEventListener('click', closeLightbox);
-        
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) closeLightbox();
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (!lightbox.classList.contains('active')) return;
-            if (e.key === 'ArrowRight') showNext();
-            else if (e.key === 'ArrowLeft') showPrev();
-            else if (e.key === 'Escape') closeLightbox();
-        });
-
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        lightbox.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, {passive: true});
-        
-        lightbox.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, {passive: true});
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchEndX < touchStartX - swipeThreshold) {
-                showNext();
-            }
-            if (touchEndX > touchStartX + swipeThreshold) {
-                showPrev();
-            }
-        }
-    });
-</script>
+    </script>
 
 </body>
 </html>
