@@ -146,78 +146,42 @@
         ];
         
         const galleryContainer = document.getElementById('gallery-container');
+        
+        // Yahan MAX_IMAGES limit set karein. 
+        // Agar aapki highest image (48) hai, toh isko 60 ya 80 rakh sakte hain taaki future images cover ho jayein.
+        const MAX_IMAGES = 80; 
 
-        function loadImagesAuto(data, index, categoryElements) {
-            return new Promise((resolve) => {
-                const imagePath = `../our portfolio/${data.folder}/${data.prefix} (${index}).jpg`;
-                const testerImg = new Image();
-                
-                testerImg.onload = function() {
+        function loadGalleryFast() {
+            // Upar se neeche loop (Newest First k liye)
+            for (let i = MAX_IMAGES; i >= 1; i--) {
+                // Har category se 1-1 image uthayenge (Round-Robin Mixing)
+                for (const data of portfolioData) {
+                    const imagePath = `../our portfolio/${data.folder}/${data.prefix} (${i}).jpg`;
+                    
                     const itemDiv = document.createElement('div');
                     itemDiv.className = `gallery-item ${data.category}`;
                     itemDiv.setAttribute('data-category', data.category);
                     
-                    itemDiv.innerHTML = `<img src="${imagePath}" alt="Harvisha Pictures ${data.folder} Photography in Kolkata ${index}" loading="lazy" decoding="async"><div class="gallery-overlay"><i class="fa-solid fa-expand overlay-icon"></i></div>`;
+                    // MAGIC STEP: onerror="this.parentElement.remove()"
+                    // Agar image nahi mili (jaise number 75 nahi h), toh wo empty box turant delete ho jayega.
+                    itemDiv.innerHTML = `
+                        <img src="${imagePath}" 
+                             alt="Harvisha Pictures ${data.folder} Photography in Kolkata ${i}" 
+                             loading="lazy" 
+                             decoding="async"
+                             onerror="this.parentElement.remove()">
+                        <div class="gallery-overlay"><i class="fa-solid fa-expand overlay-icon"></i></div>
+                    `;
                     
-                    categoryElements.push(itemDiv);
-                    resolve(true);
-                };
-                
-                testerImg.onerror = function() {
-                    resolve(false); // Image nahi mili
-                };
-                
-                testerImg.src = imagePath;
-            }).then(found => {
-                if (found) {
-                    return loadImagesAuto(data, index + 1, categoryElements);
+                    galleryContainer.appendChild(itemDiv);
                 }
-            });
-        }
-
-        async function loadAllCategories() {
-            const allCategoryElements = {}; // Har category ke elements ko store karne ke liye
-            
-            // Promise.all se sabhi categories ek sath (parallel) load hongi, jisse website fast khulegi
-            await Promise.all(portfolioData.map(async (data) => {
-                const categoryElements = []; 
-                await loadImagesAuto(data, 1, categoryElements);
-                
-                // Nayi images upar dikhane ke liye reverse
-                categoryElements.reverse(); 
-                
-                allCategoryElements[data.category] = categoryElements;
-            }));
-            
-            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-            
-            // ROUND-ROBIN MIXING LOGIC: Har category se ek-ek image uthakar 'All' me daalna
-            let hasMore = true;
-            let index = 0;
-            
-            while (hasMore) {
-                hasMore = false;
-                for (const data of portfolioData) {
-                    const catArray = allCategoryElements[data.category];
-                    
-                    if (index < catArray.length) {
-                        hasMore = true;
-                        const itemDiv = catArray[index];
-                        
-                        // Agar koi specific filter click kiya hua hai tabhi baki hide hongi
-                        if (activeFilter !== 'all' && activeFilter !== data.category) {
-                            itemDiv.classList.add('hidden');
-                        }
-                        galleryContainer.appendChild(itemDiv);
-                    }
-                }
-                index++;
             }
         }
         
-        loadAllCategories();
+        // Turant gallery render karein (No waiting)
+        loadGalleryFast();
 
-        // Filter Logic
+        // --- FILTER LOGIC ---
         const filterBtns = document.querySelectorAll('.filter-btn');
         filterBtns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -237,7 +201,7 @@
             });
         });
 
-        // Lightbox Logic
+        // --- LIGHTBOX LOGIC ---
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
