@@ -136,173 +136,195 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const portfolioData = [
-                {category: 'wedding', folder: 'Wedding', prefix: 'wedding'},
-                {category: 'prewedding', folder: 'Prewedding', prefix: 'prewedding'},
-                {category: 'anniversary', folder: 'Anniversary', prefix: 'anniversary'},
-                {category: 'engagement', folder: 'Engagement', prefix: 'engagement'},
-                {category: 'maternity', folder: 'Maternity', prefix: 'maternity'}
-            ];
+    document.addEventListener('DOMContentLoaded', () => {
+        const portfolioData = [
+            {category: 'wedding', folder: 'Wedding', prefix: 'wedding'},
+            {category: 'prewedding', folder: 'Prewedding', prefix: 'prewedding'},
+            {category: 'anniversary', folder: 'Anniversary', prefix: 'anniversary'},
+            {category: 'engagement', folder: 'Engagement', prefix: 'engagement'},
+            {category: 'maternity', folder: 'Maternity', prefix: 'maternity'}
+        ];
+        
+        const galleryContainer = document.getElementById('gallery-container');
+
+        function loadImagesAuto(data, index, categoryElements) {
+            return new Promise((resolve) => {
+                const imagePath = `../our portfolio/${data.folder}/${data.prefix} (${index}).jpg`;
+                const testerImg = new Image();
+                
+                testerImg.onload = function() {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = `gallery-item ${data.category}`;
+                    itemDiv.setAttribute('data-category', data.category);
+                    
+                    itemDiv.innerHTML = `<img src="${imagePath}" alt="Harvisha Pictures ${data.folder} Photography in Kolkata ${index}" loading="lazy" decoding="async"><div class="gallery-overlay"><i class="fa-solid fa-expand overlay-icon"></i></div>`;
+                    
+                    categoryElements.push(itemDiv);
+                    resolve(true);
+                };
+                
+                testerImg.onerror = function() {
+                    resolve(false); // Image nahi mili
+                };
+                
+                testerImg.src = imagePath;
+            }).then(found => {
+                if (found) {
+                    return loadImagesAuto(data, index + 1, categoryElements);
+                }
+            });
+        }
+
+        async function loadAllCategories() {
+            const allCategoryElements = {}; // Har category ke elements ko store karne ke liye
             
-            const galleryContainer = document.getElementById('gallery-container');
-
-            function loadImagesAuto(data, index, categoryElements) {
-                return new Promise((resolve) => {
-                    const imagePath = `../our portfolio/${data.folder}/${data.prefix} (${index}).jpg`;
-                    const testerImg = new Image();
-                    
-                    testerImg.onload = function() {
-                        const itemDiv = document.createElement('div');
-                        itemDiv.className = `gallery-item ${data.category}`;
-                        itemDiv.setAttribute('data-category', data.category);
-                        
-                        itemDiv.innerHTML = `<img src="${imagePath}" alt="Harvisha Pictures ${data.folder} Photography in Kolkata ${index}" loading="lazy" decoding="async"><div class="gallery-overlay"><i class="fa-solid fa-expand overlay-icon"></i></div>`;
-                        
-                        categoryElements.push(itemDiv);
-                        resolve(true);
-                    };
-                    
-                    testerImg.onerror = function() {
-                        resolve(false); 
-                    };
-                    
-                    testerImg.src = imagePath;
-                }).then(found => {
-                    if (found) {
-                        return loadImagesAuto(data, index + 1, categoryElements);
-                    }
-                });
-            }
-
-            async function loadAllCategories() {
+            // Promise.all se sabhi categories ek sath (parallel) load hongi, jisse website fast khulegi
+            await Promise.all(portfolioData.map(async (data) => {
+                const categoryElements = []; 
+                await loadImagesAuto(data, 1, categoryElements);
+                
+                // Nayi images upar dikhane ke liye reverse
+                categoryElements.reverse(); 
+                
+                allCategoryElements[data.category] = categoryElements;
+            }));
+            
+            const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+            
+            // ROUND-ROBIN MIXING LOGIC: Har category se ek-ek image uthakar 'All' me daalna
+            let hasMore = true;
+            let index = 0;
+            
+            while (hasMore) {
+                hasMore = false;
                 for (const data of portfolioData) {
-                    const categoryElements = []; 
+                    const catArray = allCategoryElements[data.category];
                     
-                    await loadImagesAuto(data, 1, categoryElements);
-                    
-                    // Nayi images sabse upar dikhane ke liye reverse
-                    categoryElements.reverse();
-                    
-                    const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-                    
-                    categoryElements.forEach(itemDiv => {
+                    if (index < catArray.length) {
+                        hasMore = true;
+                        const itemDiv = catArray[index];
+                        
+                        // Agar koi specific filter click kiya hua hai tabhi baki hide hongi
                         if (activeFilter !== 'all' && activeFilter !== data.category) {
                             itemDiv.classList.add('hidden');
                         }
                         galleryContainer.appendChild(itemDiv);
-                    });
+                    }
                 }
+                index++;
             }
-            
-            loadAllCategories();
+        }
+        
+        loadAllCategories();
 
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    const filterValue = btn.getAttribute('data-filter');
-                    const allGalleryItems = document.querySelectorAll('.gallery-item');
-                    
-                    allGalleryItems.forEach(item => {
-                        if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
-                            item.classList.remove('hidden');
-                        } else {
-                            item.classList.add('hidden');
-                        }
-                    });
+        // Filter Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const filterValue = btn.getAttribute('data-filter');
+                const allGalleryItems = document.querySelectorAll('.gallery-item');
+                
+                allGalleryItems.forEach(item => {
+                    if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
                 });
             });
+        });
 
-            const lightbox = document.getElementById('lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            const lightboxClose = document.getElementById('lightbox-close');
-            const btnNext = document.getElementById('lightbox-next');
-            const btnPrev = document.getElementById('lightbox-prev');
-            let currentVisibleItems = [];
-            let currentIndex = 0;
+        // Lightbox Logic
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const btnNext = document.getElementById('lightbox-next');
+        const btnPrev = document.getElementById('lightbox-prev');
+        let currentVisibleItems = [];
+        let currentIndex = 0;
 
-            galleryContainer.addEventListener('click', (e) => {
-                const item = e.target.closest('.gallery-item');
-                if (item) {
-                    currentVisibleItems = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
-                    currentIndex = currentVisibleItems.indexOf(item);
-                    updateLightboxImage();
-                    lightbox.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }
-            });
-
-            function updateLightboxImage() {
-                if (currentVisibleItems.length === 0) return;
-                lightboxImg.style.opacity = '0';
-                setTimeout(() => {
-                    const imgSrc = currentVisibleItems[currentIndex].querySelector('img').src;
-                    lightboxImg.src = imgSrc;
-                    lightboxImg.style.opacity = '1';
-                }, 150);
-            }
-
-            function showNext(e) {
-                if (e) e.stopPropagation();
-                if (currentVisibleItems.length <= 1) return;
-                currentIndex = (currentIndex + 1) % currentVisibleItems.length;
+        galleryContainer.addEventListener('click', (e) => {
+            const item = e.target.closest('.gallery-item');
+            if (item) {
+                currentVisibleItems = Array.from(document.querySelectorAll('.gallery-item:not(.hidden)'));
+                currentIndex = currentVisibleItems.indexOf(item);
                 updateLightboxImage();
-            }
-
-            function showPrev(e) {
-                if (e) e.stopPropagation();
-                if (currentVisibleItems.length <= 1) return;
-                currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
-                updateLightboxImage();
-            }
-
-            function closeLightbox() {
-                lightbox.classList.remove('active');
-                document.body.style.overflow = 'auto';
-                setTimeout(() => lightboxImg.src = "", 400);
-            }
-
-            btnNext.addEventListener('click', showNext);
-            btnPrev.addEventListener('click', showPrev);
-            lightboxClose.addEventListener('click', closeLightbox);
-            
-            lightbox.addEventListener('click', (e) => {
-                if (e.target === lightbox) closeLightbox();
-            });
-
-            document.addEventListener('keydown', (e) => {
-                if (!lightbox.classList.contains('active')) return;
-                if (e.key === 'ArrowRight') showNext();
-                else if (e.key === 'ArrowLeft') showPrev();
-                else if (e.key === 'Escape') closeLightbox();
-            });
-
-            let touchStartX = 0;
-            let touchEndX = 0;
-            
-            lightbox.addEventListener('touchstart', e => {
-                touchStartX = e.changedTouches[0].screenX;
-            }, {passive: true});
-            
-            lightbox.addEventListener('touchend', e => {
-                touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
-            }, {passive: true});
-
-            function handleSwipe() {
-                const swipeThreshold = 50;
-                if (touchEndX < touchStartX - swipeThreshold) {
-                    showNext();
-                }
-                if (touchEndX > touchStartX + swipeThreshold) {
-                    showPrev();
-                }
+                lightbox.classList.add('active');
+                document.body.style.overflow = 'hidden';
             }
         });
-    </script>
+
+        function updateLightboxImage() {
+            if (currentVisibleItems.length === 0) return;
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                const imgSrc = currentVisibleItems[currentIndex].querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightboxImg.style.opacity = '1';
+            }, 150);
+        }
+
+        function showNext(e) {
+            if (e) e.stopPropagation();
+            if (currentVisibleItems.length <= 1) return;
+            currentIndex = (currentIndex + 1) % currentVisibleItems.length;
+            updateLightboxImage();
+        }
+
+        function showPrev(e) {
+            if (e) e.stopPropagation();
+            if (currentVisibleItems.length <= 1) return;
+            currentIndex = (currentIndex - 1 + currentVisibleItems.length) % currentVisibleItems.length;
+            updateLightboxImage();
+        }
+
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            setTimeout(() => lightboxImg.src = "", 400);
+        }
+
+        btnNext.addEventListener('click', showNext);
+        btnPrev.addEventListener('click', showPrev);
+        lightboxClose.addEventListener('click', closeLightbox);
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') showNext();
+            else if (e.key === 'ArrowLeft') showPrev();
+            else if (e.key === 'Escape') closeLightbox();
+        });
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        lightbox.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, {passive: true});
+        
+        lightbox.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        }, {passive: true});
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            if (touchEndX < touchStartX - swipeThreshold) {
+                showNext();
+            }
+            if (touchEndX > touchStartX + swipeThreshold) {
+                showPrev();
+            }
+        }
+    });
+</script>
 
 </body>
 </html>
