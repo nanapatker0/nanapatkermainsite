@@ -477,8 +477,10 @@
             submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Details...';
             submitBtn.disabled = true;
 
-            fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+            // Using mode: 'no-cors' to prevent redirect blocking by the browser
+            fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
                 .then(response => {
+                    // With no-cors, the response is opaque, so we assume success if it didn't throw a network error
                     alert('Success! The wedding card details have been securely saved.');
                     form.reset();
                     
