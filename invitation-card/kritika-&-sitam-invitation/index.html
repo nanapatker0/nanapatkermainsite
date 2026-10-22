@@ -46,7 +46,16 @@ svg.m { color: var(--gold); }
 .coverin { position: relative; z-index: 2; padding: 24px; transition: opacity 0.8s, transform 1.2s cubic-bezier(0.2, 0, 0.2, 1); }
 .coverin .sh { font-size: 1.15rem; color: var(--goldl); }
 .ring { position: relative; width: 210px; height: 210px; margin: 16px auto; display: grid; place-items: center; }
-.ring svg { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--goldl); animation: spin 50s linear infinite, pulseGlow 4s ease-in-out infinite; }
+.ring svg { 
+  position: absolute; 
+  inset: 0; 
+  width: 100%; 
+  height: 100%; 
+  color: var(--goldl); 
+  animation: spin 50s linear infinite, pulseGlow 4s ease-in-out infinite; 
+  will-change: transform, opacity; /* GPU acceleration enable karne ke liye */
+  filter: drop-shadow(0 0 4px rgba(227, 192, 106, 0.3)); /* Static shadow, no animation */
+}
 .mono { font-size: 2.3rem; font-style: italic; color: var(--goldl); }
 .coverin .t { font-style: italic; font-size: 1.15rem; opacity: 0.85; }
 .coverin h2 { font-size: clamp(2.2rem, 9vw, 3.2rem); font-weight: 600; font-style: italic; margin: 6px 0; }
@@ -60,7 +69,10 @@ svg.m { color: var(--gold); }
 #cover.open::after { opacity: 0; }
 
 @keyframes spin { to { transform: rotate(360deg); } }
-@keyframes pulseGlow { 0%, 100% { filter: drop-shadow(0 0 4px rgba(227, 192, 106, 0.3)); } 50% { filter: drop-shadow(0 0 12px rgba(227, 192, 106, 0.7)); } }
+@keyframes pulseGlow { 
+  0%, 100% { opacity: 0.75; transform: scale(1); } 
+  50% { opacity: 1; transform: scale(1.02); } 
+}
 
 /* Hero section */
 .garland { height: 26px; background: radial-gradient(circle, #b8321f 0 2px, #f2a51f 3px 8px, transparent 9px) 0 0/22px 26px repeat-x; position: absolute; top: 0; left: 0; right: 0; z-index: 3; }
