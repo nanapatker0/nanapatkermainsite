@@ -76,7 +76,7 @@ svg.m { color: var(--gold); }
 .when { margin-top: 26px; font-size: 1.35rem; }
 .when small { display: block; font-size: 1rem; color: var(--soft); }
 
-/* Bouncing Scroll Indicator - Fixed Position */
+/* Bouncing Scroll Indicator */
 .scroll-hint { position: absolute; bottom: 8vh; left: 50%; transform: translateX(-50%); z-index: 10; color: var(--gold); display: flex; flex-direction: column; align-items: center; opacity: 0; transition: opacity 0.8s ease-in; pointer-events: none; }
 .scroll-hint.in { opacity: 1; animation: floatBounce 2.5s infinite; }
 .scroll-hint span { font-size: 1.05rem; font-style: italic; margin-bottom: 6px; }
@@ -92,6 +92,11 @@ svg.m { color: var(--gold); }
   80% { opacity: 0.75; } 
   100% { transform: translate3d(30px, 110vh, 0) rotate(720deg) scale(1.1); opacity: 0; } 
 }
+
+/* MUSIC TOGGLE BUTTON CSS */
+.music-toggle { position: fixed; bottom: 30px; right: 30px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: var(--goldl); color: var(--maroon2); border: none; cursor: pointer; display: none; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.25); transition: transform 0.3s, background 0.3s; }
+.music-toggle:hover { transform: scale(1.08); background: #fff; }
+.music-toggle svg { width: 22px; height: 22px; }
 
 /* Sections */
 .sec { max-width: 720px; margin: 0 auto; padding: 72px 24px; position: relative; z-index: 5; }
@@ -111,7 +116,6 @@ svg.m { color: var(--gold); }
 .band .inner { max-width: 720px; margin: 0 auto; }
 .band h2 .dev, .band svg.m { color: var(--goldl); }
 
-/* Timeline Restored to Normal Display */
 .tl { position: relative; text-align: left; margin: 0 auto; max-width: 520px; padding-left: 26px; border-left: 1px solid var(--goldl); }
 .tl article { position: relative; padding: 0 0 30px 18px; }
 .tl article::before { content: ""; position: absolute; left: -33px; top: 9px; width: 13px; height: 13px; transform: rotate(45deg); background: var(--goldl); box-shadow: 0 0 0 4px var(--maroon2); transition: transform 0.3s; }
@@ -125,7 +129,6 @@ svg.m { color: var(--gold); }
 .tl li .dev { font-size: 0.9rem; font-style: normal; color: var(--goldl); margin-left: 8px; }
 .tl li>span { opacity: 0.85; }
 
-/* Countdown Pop-in effect */
 .cd { display: flex; justify-content: center; gap: clamp(14px, 5vw, 34px); margin-top: 10px; }
 .cd div { min-width: 58px; opacity: 0; transform: scale(0.8) translateY(10px); transition: opacity 0.5s, transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
 .cd.in div { opacity: 1; transform: scale(1) translateY(0); }
@@ -148,7 +151,6 @@ svg.m { color: var(--gold); }
 .credit p { margin: 0; font-style: italic; font-size: 1.15rem; color: var(--ink); }
 .credit b { display: block; margin-top: 6px; font-size: 1.25rem; font-weight: 600; color: var(--gold); }
 
-/* Global Reveal Animations */
 .js .rv { opacity: 0; transform: translateY(25px); transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .js .rv-side { opacity: 0; transform: translateX(-20px); transition: opacity 0.7s ease-out, transform 0.7s ease-out; }
 .js .rv.in, .js .rv-side.in { opacity: 1; transform: translateY(0) translateX(0); }
@@ -158,6 +160,26 @@ svg.m { color: var(--gold); }
 </style>
 </head>
 <body>
+
+<!-- BACKGROUND AUDIO TAG (Yaha apne music ka link dalein) -->
+<audio id="bgMusic" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- MUSIC TOGGLE BUTTON -->
+<button id="musicToggle" class="music-toggle" aria-label="Toggle Music">
+  <!-- Volume ON Icon -->
+  <svg id="musicOnIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+  </svg>
+  <!-- Volume MUTE Icon -->
+  <svg id="musicOffIcon" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+    <line x1="23" y1="9" x2="17" y2="15"></line>
+    <line x1="17" y1="9" x2="23" y2="15"></line>
+  </svg>
+</button>
 
 <!-- Fixed Background Petals Container -->
 <div class="petals" id="petals"></div>
@@ -264,7 +286,6 @@ for(var i=0;i<12;i++){M+='<path transform="rotate('+i*30+')" d="M0-50Q9-36 0-22Q
 M+='<circle r="15" fill="none" stroke="currentColor" stroke-width=".8"/>';
 $('.mand').forEach(function(e){e.innerHTML=M});
 
-// Staggered reveals for the timeline events
 document.getElementById('events').innerHTML=C.days.map(function(g, dayIndex){
   var articleDelay = dayIndex * 0.15;
   return '<article class="rv-side'+(g.big?' big':'')+'" style="transition-delay:'+articleDelay+'s"><h3>'+g.d+'<small>'+g.w+'</small></h3><ul>'+g.items.map(function(e, itemIndex){
@@ -277,7 +298,6 @@ document.getElementById('map').href='https://www.google.com/maps/search/?api=1&q
 // Rose Petals Generation
 var pContainer = document.getElementById('petals');
 if(pContainer) {
-  // A mix of beautiful rose/maroon shades
   var colors = ['var(--vm)', '#d2948e', '#e2a49f', 'var(--maroon)'];
   for(var i=0; i<35; i++) {
     var p = document.createElement('div');
@@ -292,7 +312,7 @@ if(pContainer) {
   }
 }
 
-// Improved countdown
+// Countdown
 var cdContainer = document.getElementById('cd');
 var isCdSetup = false;
 function tick(){
@@ -323,23 +343,45 @@ function reveal(){
   els.forEach(function(e){io.observe(e)});
 }
 
+// MUSIC & OPEN CARD LOGIC
+var bgMusic = document.getElementById('bgMusic');
+var musicToggle = document.getElementById('musicToggle');
+var musicOnIcon = document.getElementById('musicOnIcon');
+var musicOffIcon = document.getElementById('musicOffIcon');
+
 document.getElementById('open').onclick=function(){
+  // Card door animation
   var c=document.getElementById('cover');c.classList.add('open');
+  
+  // Play Music & Show button
+  bgMusic.play().catch(function(err){ console.log("Music play blocked by browser: ", err); });
+  musicToggle.style.display = 'flex';
+
   setTimeout(function(){
     c.remove();
     document.documentElement.classList.remove('lock');
     window.scrollTo(0,0);
     reveal();
     
-    // Show scroll hint automatically after the intro animations finish
     setTimeout(function() {
       document.getElementById('scrollHint').classList.add('in');
     }, 800);
-    
   }, 1500);
 };
 
-// Fade out scroll hint when user actually scrolls
+// MUTE / UNMUTE BUTTON LOGIC
+musicToggle.onclick = function() {
+  if (bgMusic.muted) {
+    bgMusic.muted = false;
+    musicOnIcon.style.display = 'block';
+    musicOffIcon.style.display = 'none';
+  } else {
+    bgMusic.muted = true;
+    musicOnIcon.style.display = 'none';
+    musicOffIcon.style.display = 'block';
+  }
+};
+
 window.addEventListener('scroll', function() {
   var hint = document.getElementById('scrollHint');
   if(hint) {
