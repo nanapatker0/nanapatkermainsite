@@ -293,7 +293,7 @@ document.getElementById('events').innerHTML=C.days.map(function(g, dayIndex){
     return '<li class="rv-side" style="transition-delay:'+itemDelay+'s"><b>'+e.n+'<span class="dev">'+e.h+'</span></b><span>'+e.t+(e.v?', '+e.v:'')+'</span></li>'}).join('')+'</ul></article>'
 }).join('');
 
-document.getElementById('map').href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(C.venue+' '+C.addr);
+document.getElementById('map').href='https://www.google.com/maps/dir/22.6263632,88.368881/Prime+Beach+Resort,+MM26%2BMC7,+Mandarmani+Beach+Rd,+Silampur,+Mandarmani,+West+Bengal+721423/@22.1533797,87.3563385,9z/data=!3m1!4b1!4m9!4m8!1m1!4e1!1m5!1m1!1s0x3a032fdb941c9c6b:0xb80a4df3dd5489a8!2m2!1d87.6609014!2d21.6514059?entry=ttu&g_ep=EgoyMDI2MTAxOS4wIKXMDSoASAFQAw%3D%3D;
 
 // Rose Petals Generation
 var pContainer = document.getElementById('petals');
