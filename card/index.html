@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#111111">
+    
+    <title>Wedding Card Details | Harvisha Pictures</title>
+    
+    <!-- Favicon pointing to main directory -->
+    <link rel="icon" type="image/png" sizes="512x512" href="../images/favicon.png">
+    <link class="apple-touch-icon" sizes="512x512" href="../images/favicon.png">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#111111',
+                        gold: '#d4af37',
+                        goldHover: '#f1c430',
+                        cream: '#fdfbf7'
+                    },
+                    fontFamily: {
+                        playfair: ['"Playfair Display"', 'serif'],
+                        montserrat: ['"Montserrat"', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #fdfbf7; 
+            color: #111111;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Luxury Header Alignment */
+        .page-header {
+            background: #111111;
+            padding: 100px 20px 60px;
+            text-align: center;
+            color: #ffffff;
+            position: relative;
+        }
+
+        .page-title {
+            font-family: "Playfair Display", serif;
+            font-size: 42px;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .page-subtitle {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #d4af37;
+            font-weight: 500;
+        }
+
+        /* Custom Input Styling matching Harvisha Theme */
+        .form-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #666666;
+            font-weight: 600;
+            margin-bottom: 6px;
+            display: block;
+        }
+
+        .form-input {
+            width: 100%;
+            height: 48px;
+            padding: 0 18px;
+            background: #ffffff;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            color: #111111;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            border-color: #d4af37;
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.12);
+        }
+
+        /* Fix iOS Safari Date/Time inputs overriding text alignment */
+        .form-input[type="date"], .form-input[type="time"] {
+            -webkit-appearance: none;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Section Titles inside form */
+        .section-heading {
+            font-family: "Playfair Display", serif;
+            font-size: 26px;
+            color: #111111;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+            padding-bottom: 10px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-heading i {
+            color: #d4af37;
+            font-size: 20px;
+        }
+
+        /* Submit Button */
+        .gold-btn {
+            width: 100%;
+            height: 54px;
+            background: #d4af37;
+            color: #111111;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .gold-btn:hover {
+            background: #f1c430;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+        }
+
+        /* Add Event Button */
+        .add-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 30px;
+            background: transparent;
+            color: #111111;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: 1px solid #111111;
+            border-radius: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .add-btn:hover {
+            background: #111111;
+            color: #d4af37;
+        }
+
+        .custom-checkbox {
+            accent-color: #d4af37;
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* TABLET & MOBILE RESPONSIVE OPTIMIZATIONS */
+        @media (max-width: 1024px) {
+            .page-header {
+                padding: 80px 20px 40px;
+            }
+            .page-title {
+                font-size: 36px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .page-header {
+                padding: 60px 15px 30px;
+            }
+            .page-title {
+                font-size: 28px;
+            }
+            .page-subtitle {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+            .section-heading {
+                font-size: 22px;
+                margin-bottom: 20px;
+            }
+            .form-input {
+                height: 44px; 
+                font-size: 13px;
+                padding: 0 14px;
+            }
+            .gold-btn {
+                height: 50px;
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .add-btn {
+                width: 100%;
+                justify-content: center;
+                padding: 14px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <!-- Links back to the main directory -->
+        <a href="../" class="inline-block mb-4 md:mb-6">
+            <img src="../images/logow.png" alt="Harvisha Pictures Logo" class="h-10 md:h-12 w-auto mx-auto" onerror="this.src='https://via.placeholder.com/150x50?text=HARVISHA'">
+        </a>
+        <div class="page-subtitle">Client Portal</div>
+        <h1 class="page-title">Wedding Card Details</h1>
+    </header>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-5 py-8 md:py-16">
+        
+        <form action="#" method="POST" id="weddingForm" class="space-y-8 md:space-y-12">
+            
+            <!-- GROOM'S DETAILS -->
+            <section class="bg-white p-5 sm:p-8 md:p-10 rounded-xl md:rounded-2xl shadow-[0_5px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+                <h3 class="section-heading"><i class="fa-solid fa-mars"></i> Groom's Details</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="md:col-span-2">
+                        <label class="form-label">Groom's Full Name *</label>
+                        <input type="text" name="groom_name" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Father's Name *</label>
+                        <input type="text" name="groom_father" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Mother's Name *</label>
+                        <input type="text" name="groom_mother" required class="form-input">
+                    </div>
+                </div>
+
+                <!-- Grandparents Toggle -->
+                <div class="mt-5 md:mt-6 pt-4 border-t border-gray-100">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="groomGpToggle" class="custom-checkbox">
+                        <span class="ml-3 text-xs md:text-sm font-medium text-gray-800">Include Groom's Grandparents' Names</span>
+                    </label>
+                </div>
+                
+                <div id="groomGpFields" class="hidden grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-5 bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-100">
+                    <div>
+                        <label class="form-label">Grandfather's Name</label>
+                        <input type="text" name="groom_grandfather" class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Grandmother's Name</label>
+                        <input type="text" name="groom_grandmother" class="form-input">
+                    </div>
+                </div>
+            </section>
+
+            <!-- BRIDE'S DETAILS -->
+            <section class="bg-white p-5 sm:p-8 md:p-10 rounded-xl md:rounded-2xl shadow-[0_5px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+                <h3 class="section-heading"><i class="fa-solid fa-venus"></i> Bride's Details</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div class="md:col-span-2">
+                        <label class="form-label">Bride's Full Name *</label>
+                        <input type="text" name="bride_name" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Father's Name *</label>
+                        <input type="text" name="bride_father" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Mother's Name *</label>
+                        <input type="text" name="bride_mother" required class="form-input">
+                    </div>
+                </div>
+
+                <!-- Grandparents Toggle -->
+                <div class="mt-5 md:mt-6 pt-4 border-t border-gray-100">
+                    <label class="inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="brideGpToggle" class="custom-checkbox">
+                        <span class="ml-3 text-xs md:text-sm font-medium text-gray-800">Include Bride's Grandparents' Names</span>
+                    </label>
+                </div>
+                
+                <div id="brideGpFields" class="hidden grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-4 md:mt-5 bg-gray-50 p-4 md:p-5 rounded-lg border border-gray-100">
+                    <div>
+                        <label class="form-label">Grandfather's Name</label>
+                        <input type="text" name="bride_grandfather" class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Grandmother's Name</label>
+                        <input type="text" name="bride_grandmother" class="form-input">
+                    </div>
+                </div>
+            </section>
+
+            <!-- EVENTS SECTION -->
+            <section class="bg-white p-5 sm:p-8 md:p-10 rounded-xl md:rounded-2xl shadow-[0_5px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+                <h3 class="section-heading"><i class="fa-regular fa-calendar-check"></i> Event Itinerary</h3>
+                
+                <div id="eventsContainer" class="space-y-6">
+                    <!-- Default Event 1 -->
+                    <div class="event-block p-4 md:p-6 border border-gray-200 rounded-xl bg-gray-50 relative">
+                        <div class="flex items-center justify-between mb-4 md:mb-5 pb-3 border-b border-gray-200">
+                            <h4 class="font-playfair text-lg md:text-xl text-dark font-semibold event-title">Event 1</h4>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                            <div>
+                                <label class="form-label">Event Name (e.g., Haldi) *</label>
+                                <input type="text" name="event_name[]" required class="form-input">
+                            </div>
+                            <div>
+                                <label class="form-label">Date *</label>
+                                <input type="date" name="event_date[]" required class="form-input text-gray-500">
+                            </div>
+                            <div>
+                                <label class="form-label">Time *</label>
+                                <input type="time" name="event_time[]" required class="form-input text-gray-500">
+                            </div>
+                            <div>
+                                <label class="form-label">Venue Name & Address *</label>
+                                <input type="text" name="event_venue[]" required class="form-input">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-6 md:mt-8 text-center">
+                    <button type="button" id="addEventBtn" class="add-btn">
+                        <i class="fa-solid fa-plus"></i> Add Another Event
+                    </button>
+                </div>
+            </section>
+
+            <!-- CLOSING DETAILS -->
+            <section class="bg-white p-5 sm:p-8 md:p-10 rounded-xl md:rounded-2xl shadow-[0_5px_20px_rgba(0,0,0,0.03)] border border-gray-100">
+                <h3 class="section-heading"><i class="fa-solid fa-envelope-open-text"></i> Closing Details</h3>
+                <div class="grid grid-cols-1 gap-4 md:gap-6">
+                    <div>
+                        <label class="form-label">RSVP Name(s) (Optional)</label>
+                        <input type="text" name="rsvp_name" class="form-input" placeholder="e.g., The Sharma Family">
+                    </div>
+                    <div>
+                        <label class="form-label">Sweet Message / Invitation Note (Optional)</label>
+                        <textarea name="sweet_message" rows="3" class="w-full p-3 md:p-4 bg-white border border-gray-300 rounded-lg font-montserrat text-sm text-dark focus:border-gold focus:ring-4 focus:ring-gold/10 outline-none transition-all resize-none" placeholder="e.g., We can't wait to celebrate our special day with you!"></textarea>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUBMIT BUTTON -->
+            <div class="pt-2 pb-10">
+                <button type="submit" class="gold-btn">
+                    Submit Details Securely
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Toggle Groom's Grandparents Fields
+        document.getElementById('groomGpToggle').addEventListener('change', function() {
+            const fields = document.getElementById('groomGpFields');
+            if(this.checked) {
+                fields.classList.remove('hidden');
+                fields.classList.add('grid');
+            } else {
+                fields.classList.add('hidden');
+                fields.classList.remove('grid');
+            }
+        });
+
+        // Toggle Bride's Grandparents Fields
+        document.getElementById('brideGpToggle').addEventListener('change', function() {
+            const fields = document.getElementById('brideGpFields');
+            if(this.checked) {
+                fields.classList.remove('hidden');
+                fields.classList.add('grid');
+            } else {
+                fields.classList.add('hidden');
+                fields.classList.remove('grid');
+            }
+        });
+
+        // Dynamic Add Event Logic
+        let eventCount = 1;
+        document.getElementById('addEventBtn').addEventListener('click', function() {
+            eventCount++;
+            
+            const eventBlock = document.createElement('div');
+            eventBlock.className = 'event-block p-4 md:p-6 border border-gray-200 rounded-xl bg-gray-50 relative mt-4 md:mt-6 transition-all duration-300';
+            
+            eventBlock.innerHTML = `
+                <div class="flex items-center justify-between mb-4 md:mb-5 pb-3 border-b border-gray-200">
+                    <h4 class="font-playfair text-lg md:text-xl text-dark font-semibold event-title">Event ${eventCount}</h4>
+                    <button type="button" class="remove-event text-red-500 hover:text-red-700 text-xs md:text-sm font-semibold uppercase tracking-wider transition-colors">
+                        <i class="fa-solid fa-xmark"></i> Remove
+                    </button>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                    <div>
+                        <label class="form-label">Event Name *</label>
+                        <input type="text" name="event_name[]" required class="form-input">
+                    </div>
+                    <div>
+                        <label class="form-label">Date *</label>
+                        <input type="date" name="event_date[]" required class="form-input text-gray-500">
+                    </div>
+                    <div>
+                        <label class="form-label">Time *</label>
+                        <input type="time" name="event_time[]" required class="form-input text-gray-500">
+                    </div>
+                    <div>
+                        <label class="form-label">Venue Name & Address *</label>
+                        <input type="text" name="event_venue[]" required class="form-input">
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('eventsContainer').appendChild(eventBlock);
+            
+            // Add remove functionality
+            eventBlock.querySelector('.remove-event').addEventListener('click', function() {
+                eventBlock.remove();
+                updateEventTitles();
+            });
+        });
+
+        function updateEventTitles() {
+            const titles = document.querySelectorAll('.event-title');
+            eventCount = 0;
+            titles.forEach((title) => {
+                eventCount++;
+                title.textContent = `Event ${eventCount}`;
+            });
+        }
+
+        // Form Submission to Google Sheets
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzWB6WxalJZPmScCSOmRhVANBVU7Zn4-znaWzT32A1K297SJhTX4gZaXzxB-kXpLA/exec';
+        const form = document.getElementById('weddingForm');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            
+            const submitBtn = form.querySelector('button[type="submit"]');
+            const originalText = submitBtn.innerHTML;
+            
+            // Loading state
+            submitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving Details...';
+            submitBtn.disabled = true;
+
+            // Using mode: 'no-cors' to prevent redirect blocking by the browser
+            fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: 'no-cors' })
+                .then(response => {
+                    // With no-cors, the response is opaque, so we assume success if it didn't throw a network error
+                    alert('Success! The wedding card details have been securely saved.');
+                    form.reset();
+                    
+                    // Reset dynamic UI elements
+                    document.getElementById('groomGpFields').classList.add('hidden');
+                    document.getElementById('groomGpFields').classList.remove('grid');
+                    document.getElementById('brideGpFields').classList.add('hidden');
+                    document.getElementById('brideGpFields').classList.remove('grid');
+                    
+                    // Remove extra event blocks, keep only the first one
+                    const extraEvents = document.querySelectorAll('.event-block:not(:first-child)');
+                    extraEvents.forEach(evt => evt.remove());
+                    eventCount = 1; 
+                })
+                .catch(error => {
+                    console.error('Error!', error.message);
+                    alert('Something went wrong. Please try again.');
+                })
+                .finally(() => {
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
