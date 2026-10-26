@@ -31,7 +31,7 @@ h1,h2,h3,p{margin:0}
 #stage.done{opacity:0;pointer-events:none}
 #stage .eyebrow{font-size:1.2rem;color:var(--vr);transition:opacity .5s}
 #stage .hint{font-style:italic;color:var(--ps);margin-bottom:16px;transition:opacity .5s}
-.env{position:relative;width:min(86vw,400px);aspect-ratio:3/2;margin:110px auto 34px;perspective:1000px;filter:drop-shadow(0 20px 22px rgba(90,18,32,.38))}
+.env{position:relative;width:min(86vw,400px);aspect-ratio:3/2;margin:80px auto 28px;perspective:1000px;filter:drop-shadow(0 20px 22px rgba(90,18,32,.38))}
 .eback{position:absolute;inset:0;background:var(--red1)}
 .efront{position:absolute;inset:0;z-index:3;background:linear-gradient(#fdf6e4,#eedaa8);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%)}
 .vline{position:absolute;inset:0;width:100%;height:100%;z-index:5;pointer-events:none}
@@ -47,6 +47,10 @@ h1,h2,h3,p{margin:0}
 .open .seal{opacity:0;transform:scale(.5)}
 .open .eyebrow,.open .hint{opacity:0}
 #open:disabled{opacity:.55;cursor:default}
+.gan{display:block;width:56px;height:83px;flex:none;color:var(--gd)}
+#stage .gan{margin-bottom:4px;transition:opacity .5s}
+.open .gan{opacity:0}
+.hero .gan{width:66px;height:98px;margin-bottom:8px}
 
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 70px;color:var(--mr);overflow:hidden;background:radial-gradient(ellipse at 50% 25%,var(--paper),var(--paper2) 90%)}
@@ -132,6 +136,23 @@ h1,h2,h3,p{margin:0}
 </head>
 <body>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="ganesh" viewBox="84 8 376 556"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+<ellipse cx="266" cy="42" rx="17" ry="24" fill="currentColor" stroke="none"/>
+<path d="M222 52Q184 72 181 122M322 52Q362 72 366 126" stroke-width="10"/>
+<path d="M236 80Q266 88 298 80M218 99Q266 110 318 99M205 115Q266 128 331 115" stroke-width="10"/>
+<ellipse cx="266" cy="159" rx="10" ry="11" fill="var(--vr)" stroke="none"/>
+<ellipse cx="266" cy="187" rx="14" ry="18" fill="var(--vr)" stroke="none"/>
+<path d="M97 167C126 140 180 128 216 150C242 166 246 200 245 232" stroke-width="24"/>
+<path d="M99 172C118 200 146 232 166 252" stroke-width="9"/>
+<path d="M186 192C202 200 211 220 215 242" stroke-width="9"/>
+<path d="M444 188C420 150 372 136 332 152C302 164 299 205 299 240" stroke-width="26"/>
+<path d="M444 192C430 220 402 246 380 264" stroke-width="9"/>
+<path d="M356 178C336 190 322 212 316 238" stroke-width="9"/>
+<path d="M245 232C246 262 252 280 274 306C302 344 336 372 341 414C344 448 304 462 264 494C240 516 238 540 264 553" stroke-width="12"/>
+<path d="M299 240C300 292 338 330 358 372C374 406 366 432 340 450C312 468 285 480 262 494" stroke-width="24"/>
+<path d="M219 288C230 297 240 297 247 290" stroke-width="10"/>
+</g></symbol></svg>
+
 <audio id="bgMusic" loop preload="none"><source src="music.mp3" type="audio/mpeg"></audio>
 
 <button id="musicToggle" class="music-toggle" type="button" aria-label="Toggle music">
@@ -143,6 +164,7 @@ h1,h2,h3,p{margin:0}
 
 <div id="stage">
   <div class="garland" style="top:env(safe-area-inset-top,0px)"></div>
+  <svg class="gan" aria-hidden="true"><use href="#ganesh"/></svg>
   <p class="eyebrow dev">॥ श्री गणेशाय नमः ॥</p>
   <div class="env">
     <div class="eback"></div>
@@ -164,6 +186,7 @@ h1,h2,h3,p{margin:0}
 <header class="hero">
   <div class="garland"></div>
   <svg class="bg mand" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
+  <svg class="gan rv" aria-hidden="true"><use href="#ganesh"/></svg>
   <p class="sh dev rv">॥ श्री गणेशाय नमः ॥</p>
   <p class="lead rv">With the blessings of Lord Ganesha and our elders, we joyfully invite you to the wedding of</p>
   <h1 class="names rv"><span data-k="gn"></span><i>&amp;</i><span data-k="bn"></span></h1>
