@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" class="lock">
 <head>
 <meta charset="utf-8">
@@ -13,14 +13,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Updated Royal Theme Colors */
+  /* Royal Theme Colors - Forced Light Mode to match background image */
   --bg:#fbf3df;--bg2:#f1e0b3;--ink:#4a0815;--soft:#754a39;--gold:#b8860b;--vm:#a82222;
   --mr:#4a0815;--ps:#754a39;--vr:#a82222;--gd:#b8860b;--gl:#e0b85a;--paper:#fffaf0;--paper2:#f1dfb0;--red1:#6a0a1f;--red2:#3a040f;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
 }
 *,*::before,*::after{box-sizing:inherit}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1a0509;--bg2:#2a0810;--ink:#f8edd9;--soft:#e3c8b1;--gold:#e8c974;--vm:#f2684b}}
-:root[data-theme="dark"]{--bg:#1a0509;--bg2:#2a0810;--ink:#f8edd9;--soft:#e3c8b1;--gold:#e8c974;--vm:#f2684b}
+
+/* 
+  FIX: Removed the @media (prefers-color-scheme:dark) block. 
+  Since you are using a fixed light background image (mahal-card.jpg), 
+  the text MUST stay dark even if the user's phone is in Dark Mode. 
+*/
 
 html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:16px}
 html.lock{overflow:hidden}
@@ -141,7 +145,7 @@ h1,h2,h3,p{margin:0}
 
 /* sections */
 .sec{width:100%;max-width:680px;margin:0 auto;padding:clamp(20px, 6vw, 40px) 16px;position:relative;z-index:5}
-.sec h2{font-size:clamp(1.35rem, 6vw, 1.8rem);font-weight:600;font-style:italic}
+.sec h2{font-size:clamp(1.35rem, 6vw, 1.8rem);font-weight:600;font-style:italic; color:var(--ink);}
 .sec h2 .dev{display:block;font-size:clamp(0.85rem, 3.5vw, 1rem);font-style:normal;color:var(--gold);margin-bottom:4px}
 .orn{width:60px;height:10px;margin:10px auto 20px;color:var(--gold)}
 
@@ -150,12 +154,12 @@ h1,h2,h3,p{margin:0}
 .fam-divider{width:60%;max-width:180px;height:1px;background-color:var(--gold);margin:0 auto;opacity:0.6}
 .fam-side{text-align:center;width:100%;max-width:340px}
 .fam-side .dev{display:block;color:var(--vm);font-size:clamp(0.85rem, 3.5vw, 0.95rem);margin-bottom:4px}
-.fam-side b{display:block;font-size:clamp(1.15rem, 5vw, 1.4rem);font-style:italic;font-weight:600;margin:2px 0 4px}
+.fam-side b{display:block;font-size:clamp(1.15rem, 5vw, 1.4rem);font-style:italic;font-weight:600;margin:2px 0 4px; color:var(--ink);}
 .fam-side span.r{display:block;color:var(--soft);font-size:clamp(0.8rem, 3.2vw, 0.9rem);line-height:1.35}
 .fam-side small{display:block;margin-top:5px;color:var(--soft);font-size:clamp(0.72rem, 2.7vw, 0.8rem);line-height:1.3}
 
 /* Grouped Events block */
-.band{max-width:none;background:transparent}
+.band{max-width:none;background:transparent; padding-top: 100px;} /* FIX: Added padding-top to avoid overlapping the arch in the background */
 .band .in{max-width:580px;margin:0 auto;text-align:center}
 .band h2{text-align:center}
 .ev{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border-top:1px solid rgba(184,134,11,.35); transition: background 0.3s;}
@@ -164,18 +168,18 @@ h1,h2,h3,p{margin:0}
 .ev.main:hover{background:rgba(168,34,34,.08);}
 .dd{text-align:center;line-height:1.15;margin-bottom:8px}
 .dd b{display:block;font-size:clamp(1.8rem, 8vw, 2.5rem);font-weight:600;color:var(--vm)}
-.dd span{display:block;font-size:clamp(0.82rem, 3.4vw, 0.95rem); font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-top:2px}
+.dd span{display:block;font-size:clamp(0.82rem, 3.4vw, 0.95rem); font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-top:2px; color:var(--soft);} /* FIX: Added explicit color */
 .dd small{display:block;font-size:clamp(0.7rem, 2.8vw, 0.8rem);color:var(--soft); margin-top:4px}
 
 .ev-details{text-align:center;width:100%; max-width:400px; margin:0 auto}
 .sub-ev{padding:14px 0; border-bottom:1px dashed rgba(184,134,11,0.25); text-align:center;}
 .sub-ev:last-child{border-bottom:none; padding-bottom:0;}
-.sub-ev h3{font-size:clamp(1.15rem, 4.5vw, 1.3rem);font-weight:600;font-style:italic}
+.sub-ev h3{font-size:clamp(1.15rem, 4.5vw, 1.3rem);font-weight:600;font-style:italic; color:var(--ink);} /* FIX: Added explicit color */
 .sub-ev h3 .dev{font-size:clamp(0.75rem, 3vw, 0.85rem);font-style:normal;color:var(--gold);display:block; margin-bottom:2px}
 .sub-meta{color:var(--vm);font-size:clamp(0.85rem, 3.5vw, 0.95rem);font-weight:600;margin-top:6px;display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;}
 .sub-meta .dot{color:var(--gold);font-size:0.8rem;}
 .sub-meta .vn{color:var(--mr);font-weight:500;}
-.sub-ev a.cal-link{display:inline-block;margin-top:6px;font-size:0.75rem;color:var(--gold);text-decoration:underline; opacity:0.9;}
+.sub-ev a.cal-link{display:inline-block;margin-top:6px;font-size:0.8rem;color:var(--soft);text-decoration:underline; opacity:0.9; font-weight: 500;} /* FIX: Made color darker for better readability */
 
 /* Countdown Card */
 .countdown-box{
