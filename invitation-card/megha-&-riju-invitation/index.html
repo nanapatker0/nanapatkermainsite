@@ -13,21 +13,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
 <style>
 :root{
-  /* Royal Theme Colors - Forced Light Mode to match background image */
   --bg:#fbf3df;--bg2:#f1e0b3;--ink:#4a0815;--soft:#754a39;--gold:#b8860b;--vm:#a82222;
   --mr:#4a0815;--ps:#754a39;--vr:#a82222;--gd:#b8860b;--gl:#e0b85a;--paper:#fffaf0;--paper2:#f1dfb0;--red1:#6a0a1f;--red2:#3a040f;
   box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
 }
 *,*::before,*::after{box-sizing:inherit}
 
-/* 
-  FIX: Removed the @media (prefers-color-scheme:dark) block. 
-  Since you are using a fixed light background image (mahal-card.jpg), 
-  the text MUST stay dark even if the user's phone is in Dark Mode. 
-*/
-
 html{scroll-padding-top:env(safe-area-inset-top,0px);font-size:16px}
-html.lock{overflow:hidden}
+
+/* FIX: Stronger scroll lock for mobile devices at the start */
+html.lock, html.lock body {
+  overflow: hidden !important;
+  height: 100% !important;
+  touch-action: none;
+  overscroll-behavior: none;
+}
 
 body{
   margin:0;background:transparent;color:var(--ink);
@@ -62,6 +62,7 @@ h1,h2,h3,p{margin:0}
   color:var(--mr);padding:env(safe-area-inset-top,10px) 16px env(safe-area-inset-bottom,10px);
   background:radial-gradient(circle at 1px 1px,rgba(184,134,11,.15) 1px,transparent 0) 0 0/20px 20px,radial-gradient(ellipse at 50% 40%,#fff9e8,#eedca5 90%);
   transition:opacity .9s;
+  touch-action: none; /* Prevents scroll bouncing while envelope is visible */
 }
 #stage.done{opacity:0;pointer-events:none}
 #stage .eyebrow{font-size:clamp(0.95rem, 4vw, 1.15rem);color:var(--vr);transition:opacity .5s}
@@ -85,7 +86,7 @@ h1,h2,h3,p{margin:0}
 #stage .gan{margin-bottom:4px;transition:opacity .5s}
 .open .gan{opacity:0}
 
-/* hero - WITH DYNAMIC BACKGROUND & LARGER TEXT */
+/* hero */
 .hero{
   position:relative;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:40px 18px;color:var(--mr);overflow:hidden;background:transparent;text-align:center; z-index:2;
@@ -159,7 +160,7 @@ h1,h2,h3,p{margin:0}
 .fam-side small{display:block;margin-top:5px;color:var(--soft);font-size:clamp(0.72rem, 2.7vw, 0.8rem);line-height:1.3}
 
 /* Grouped Events block */
-.band{max-width:none;background:transparent; padding-top: 100px;} /* FIX: Added padding-top to avoid overlapping the arch in the background */
+.band{max-width:none;background:transparent; padding-top: 100px;}
 .band .in{max-width:580px;margin:0 auto;text-align:center}
 .band h2{text-align:center}
 .ev{display:flex;flex-direction:column;align-items:center;gap:8px;padding:20px 12px;border-top:1px solid rgba(184,134,11,.35); transition: background 0.3s;}
@@ -168,18 +169,18 @@ h1,h2,h3,p{margin:0}
 .ev.main:hover{background:rgba(168,34,34,.08);}
 .dd{text-align:center;line-height:1.15;margin-bottom:8px}
 .dd b{display:block;font-size:clamp(1.8rem, 8vw, 2.5rem);font-weight:600;color:var(--vm)}
-.dd span{display:block;font-size:clamp(0.82rem, 3.4vw, 0.95rem); font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-top:2px; color:var(--soft);} /* FIX: Added explicit color */
+.dd span{display:block;font-size:clamp(0.82rem, 3.4vw, 0.95rem); font-weight:500; text-transform:uppercase; letter-spacing:1px; margin-top:2px; color:var(--soft);}
 .dd small{display:block;font-size:clamp(0.7rem, 2.8vw, 0.8rem);color:var(--soft); margin-top:4px}
 
 .ev-details{text-align:center;width:100%; max-width:400px; margin:0 auto}
 .sub-ev{padding:14px 0; border-bottom:1px dashed rgba(184,134,11,0.25); text-align:center;}
 .sub-ev:last-child{border-bottom:none; padding-bottom:0;}
-.sub-ev h3{font-size:clamp(1.15rem, 4.5vw, 1.3rem);font-weight:600;font-style:italic; color:var(--ink);} /* FIX: Added explicit color */
+.sub-ev h3{font-size:clamp(1.15rem, 4.5vw, 1.3rem);font-weight:600;font-style:italic; color:var(--ink);}
 .sub-ev h3 .dev{font-size:clamp(0.75rem, 3vw, 0.85rem);font-style:normal;color:var(--gold);display:block; margin-bottom:2px}
 .sub-meta{color:var(--vm);font-size:clamp(0.85rem, 3.5vw, 0.95rem);font-weight:600;margin-top:6px;display:flex;justify-content:center;align-items:center;gap:6px;flex-wrap:wrap;}
 .sub-meta .dot{color:var(--gold);font-size:0.8rem;}
 .sub-meta .vn{color:var(--mr);font-weight:500;}
-.sub-ev a.cal-link{display:inline-block;margin-top:6px;font-size:0.8rem;color:var(--soft);text-decoration:underline; opacity:0.9; font-weight: 500;} /* FIX: Made color darker for better readability */
+.sub-ev a.cal-link{display:inline-block;margin-top:6px;font-size:0.8rem;color:var(--soft);text-decoration:underline; opacity:0.9; font-weight: 500;}
 
 /* Countdown Card */
 .countdown-box{
@@ -291,7 +292,6 @@ h1,h2,h3,p{margin:0}
 </div>
 
 <header class="hero">
-  <!-- Dynamic Glowing Background -->
   <div class="dynamic-bg" aria-hidden="true"></div>
   
   <svg class="gan rv" aria-hidden="true"><use href="#ganesh"/></svg>
@@ -329,7 +329,6 @@ h1,h2,h3,p{margin:0}
   
   <div class="contact" id="contact"></div>
 
-  <!-- Big Location Buttons for the end -->
   <div class="venue-buttons">
     <a href="https://www.google.com/maps/search/?api=1&query=Residence+Kolkata" class="btn-sm" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
@@ -341,7 +340,6 @@ h1,h2,h3,p{margin:0}
     </a>
   </div>
 
-  <!-- Sweet Message before Credits -->
   <p class="sweet-msg rv" id="msg"></p>
 
   <div class="credit">
@@ -413,11 +411,9 @@ document.getElementById('events').innerHTML = groupedEvents.map(function(g){
   var p = g.d.split('-'), dt = new Date(Date.UTC(+p[0],p[1]-1,+p[2]));
   
   var html = '<article class="ev rv'+(g.main?' main':'')+'">';
-  // Date Main Heading
   html += '<div class="dd"><b>'+(+p[2])+'</b><span>'+MN[p[1]-1]+'</span><small>'+W[dt.getUTCDay()]+'</small></div>';
   html += '<div class="ev-details">';
   
-  // Sub events list
   g.items.forEach(function(e) {
     var loc = e.l || ((e.v?e.v+', ':'')+e.a);
     html += '<div class="sub-ev">';
