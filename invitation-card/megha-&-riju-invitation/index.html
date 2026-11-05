@@ -381,9 +381,9 @@ document.documentElement.classList.add('js');
 
 var C={
   gn:"Riju", bn:"Megha", host:"Enania Family",
-  groom:{n:"Riju Sharma",f:"Mayank Ji Sharma",m:"Deepti Devi Sharma",g:"Kathabhatt Subodh Ji Sharma",gm:"Sushila Devi Sharma"},
-  bride:{n:"Megha Enania",f:"Subhash Chandra Enania",m:"Rekha Devi Enania",g:"Late Nandlal Ji Enania",gm:"Lt. Shanti Devi Enania"},
-  contact:{n:"Suresh Kumar Enania",p:"9876543210"},
+  groom:{n:"Riju Sharma",f:"Mayank Sharma",m:"Deepti Sharma",g:"Kathabhatt Dr. Subodh Ji Sharma",gm:"Shrimati Sushila Devi Sharma"},
+  bride:{n:"Megha Enania",f:"Subhash Chandra Sharma",m:"Rekha Devi Sharma",g:"Lt. Nandlal Ji Sharma (Enania)",gm:"Lt. Shanti Devi Sharma"},
+  contact:{n:"Suresh Kumar Sharma (Enania) & family",p:"9876543210"},
   msg:"Meli maasi ki shaadi me jalul jalul aana!",
   date:"2026-11-26T18:30:00+05:30",
   dateText:"Thursday, 26 November 2026",
@@ -412,7 +412,8 @@ function side(p,label,rel,gr){
     if(p.g) names.push(p.g);
     grand = '<small>'+gr+' '+names.join(' &amp; ')+'</small>';
   }
-  return '<div class="fam-side"><span class="dev">'+label+'</span><b>'+p.n+'</b><span class="r">'+rel+' of Mr. '+p.f+' &amp; Mrs. '+p.m+'</span>'+grand+'</div>';
+  // Changed format to Mrs. [Mother] & Mr. [Father] (Ladies first)
+  return '<div class="fam-side"><span class="dev">'+label+'</span><b>'+p.n+'</b><span class="r">'+rel+' of Mrs. '+p.m+' &amp; Mr. '+p.f+'</span>'+grand+'</div>';
 }
 // Swapped so Bride comes first
 document.getElementById('fam').innerHTML=side(C.bride,'वधू पक्ष','Daughter','Granddaughter of')+'<div class="fam-divider"><svg width="40" height="20"><use href="#floral-div"/></svg></div>'+side(C.groom,'वर पक्ष','Son','Grandson of');
