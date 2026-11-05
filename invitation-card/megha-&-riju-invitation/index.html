@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Riju &amp; Megha — 26 November 2026</title>
-<meta name="description" content="You are warmly invited to the wedding of Riju &amp; Megha on Thursday, 26 November 2026.">
-<meta property="og:title" content="Riju &amp; Megha — Wedding Invitation">
+<title>Megha &amp; Riju — 26 November 2026</title>
+<meta name="description" content="You are warmly invited to the wedding of Megha &amp; Riju on Thursday, 26 November 2026.">
+<meta property="og:title" content="Megha &amp; Riju — Wedding Invitation">
 <meta property="og:description" content="Thursday, 26 November 2026 · Mayuri Banquet, Kolkata">
 <meta name="theme-color" content="#6a0a1f">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -306,7 +306,7 @@ h1,h2,h3,p{margin:0}
     <div class="eback"></div>
     <div class="card">
       <p class="dev">॥ शुभ विवाह ॥</p>
-      <h2><span data-k="gn"></span> &amp; <span data-k="bn"></span></h2>
+      <h2><span data-k="bn"></span> &amp; <span data-k="gn"></span></h2>
       <p>Wedding Invitation</p>
     </div>
     <div class="efront"></div>
@@ -324,7 +324,7 @@ h1,h2,h3,p{margin:0}
   <svg class="gan rv" aria-hidden="true"><use href="#ganesh"/></svg>
   <p class="sh dev rv">॥ श्री गणेशाय नमः ॥</p>
   <p class="lead rv">With the blessings of Lord Ganesha and our elders, we joyfully invite you to the wedding of</p>
-  <h1 class="names rv"><span data-k="gn"></span><i>&amp;</i><span data-k="bn"></span></h1>
+  <h1 class="names rv"><span data-k="bn"></span><i>&amp;</i><span data-k="gn"></span></h1>
   <p class="when rv"><span data-k="dateText"></span><small data-k="dateNote"></small></p>
 </header>
 
@@ -380,10 +380,10 @@ h1,h2,h3,p{margin:0}
 document.documentElement.classList.add('js');
 
 var C={
-  gn:"Riju", bn:"Megha", host:"Sharma Family",
-  groom:{n:"Riju Sharma",f:"Mayank Ji Sharma",m:"Deepti Devi Sharma",g:"Kathabhatt Subodh Ji Sharma"},
-  bride:{n:"Megha Sharma",f:"Subhash Chandra Sharma",m:"Rekha Devi Sharma",g:"Late Nandlal Ji Enania"},
-  contact:{n:"Suresh Kumar Sharma",p:"9876543210"},
+  gn:"Riju", bn:"Megha", host:"Enania Family",
+  groom:{n:"Riju Sharma",f:"Mayank Ji Sharma",m:"Deepti Devi Sharma",g:"Kathabhatt Subodh Ji Sharma",gm:"Sushila Devi Sharma"},
+  bride:{n:"Megha Enania",f:"Subhash Chandra Sharma",m:"Rekha Devi Sharma",g:"Late Nandlal Ji Enania",gm:"Lt. Shanti Devi Sharma"},
+  contact:{n:"Suresh Kumar Enania",p:"9876543210"},
   msg:"Meli maasi ki shaadi me jalul jalul aana!",
   date:"2026-11-26T18:30:00+05:30",
   dateText:"Thursday, 26 November 2026",
@@ -394,20 +394,28 @@ var C={
     {n:"Kirtan",h:"कीर्तन",d:"2026-11-22",t:"17:00",v:"Residence",a:"Kolkata"},
     {n:"Mehandi",h:"मेहंदी",d:"2026-11-24",t:"11:00",v:"Evara Kolkata",a:"Kolkata"},
     {n:"Mayra",h:"मायरा",d:"2026-11-25",t:"10:00",v:"Evara Kolkata",a:"Kolkata"},
-    {n:"Wedding",h:"शुभ विवाह",d:"2026-11-26",t:"18:30",v:"Mayuri Banquet",a:"Kolkata",main:1}
+    {n:"Wedding",h:"शुभ विवाह",d:"2026-11-26",t:"18:30",v:"Mayuri Banquet",a:"Kolkata",main:1},
+    {n:"Reception",h:"रिसेप्शन",d:"2026-11-26",t:"19:30",v:"Mayuri Banquet",a:"Kolkata"}
   ]
 };
 
 var $=function(s){return document.querySelectorAll(s)};
 $('[data-k]').forEach(function(e){e.textContent=C[e.dataset.k]});
-document.getElementById('mono').textContent=C.gn[0]+C.bn[0];
+document.getElementById('mono').textContent=C.bn[0]+C.gn[0];
 document.getElementById('msg').textContent='“ '+C.msg+' ”';
 
 function side(p,label,rel,gr){
-  var grandParent = p.g ? '<small>'+gr+' '+p.g+'</small>' : '';
-  return '<div class="fam-side"><span class="dev">'+label+'</span><b>'+p.n+'</b><span class="r">'+rel+' of Mr. '+p.f+' &amp; Mrs. '+p.m+'</span>'+grandParent+'</div>';
+  var grand = '';
+  if(p.g || p.gm){
+    var names = [];
+    if(p.gm) names.push(p.gm);
+    if(p.g) names.push(p.g);
+    grand = '<small>'+gr+' '+names.join(' &amp; ')+'</small>';
+  }
+  return '<div class="fam-side"><span class="dev">'+label+'</span><b>'+p.n+'</b><span class="r">'+rel+' of Mr. '+p.f+' &amp; Mrs. '+p.m+'</span>'+grand+'</div>';
 }
-document.getElementById('fam').innerHTML=side(C.groom,'वर पक्ष','Son','Grandson of')+'<div class="fam-divider"><svg width="40" height="20"><use href="#floral-div"/></svg></div>'+side(C.bride,'वधू पक्ष','Daughter','Granddaughter of');
+// Swapped so Bride comes first
+document.getElementById('fam').innerHTML=side(C.bride,'वधू पक्ष','Daughter','Granddaughter of')+'<div class="fam-divider"><svg width="40" height="20"><use href="#floral-div"/></svg></div>'+side(C.groom,'वर पक्ष','Son','Grandson of');
 
 var W=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
     MN=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -419,7 +427,7 @@ function fmt(t){
 function utc(x){return x.toISOString().replace(/[-:]|\.\d{3}/g,'')}
 function gcal(e,loc){
   var s=new Date(e.d+'T'+e.t+':00+05:30');
-  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.n+' – '+C.gn+' & '+C.bn)+'&dates='+utc(s)+'/'+utc(new Date(+s+3*36e5))+'&location='+encodeURIComponent(loc);
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.n+' – '+C.bn+' & '+C.gn)+'&dates='+utc(s)+'/'+utc(new Date(+s+3*36e5))+'&location='+encodeURIComponent(loc);
 }
 
 // Event Grouping Logic
