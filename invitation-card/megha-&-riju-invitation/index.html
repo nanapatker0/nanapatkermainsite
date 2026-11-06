@@ -381,8 +381,8 @@ document.documentElement.classList.add('js');
 
 var C={
   gn:"Riju", bn:"Megha", host:"Enania Family",
-  groom:{n:"Riju Sharma",f:"Mayank Sharma",m:"Deepti Sharma",g:"Kathabhatt Dr. Subodh Ji Sharma",gm:"Shrimati Sushila Devi Sharma"},
-  bride:{n:"Megha Enania",f:"Subhash Chandra Sharma",m:"Rekha Devi Sharma",g:"Lt. Nandlal Ji Sharma (Enania)",gm:"Lt. Shanti Devi Sharma"},
+  groom:{n:"Riju",f:"Mayank Sharma",m:"Deepti Sharma",g:"Kathabhatt Dr. Subodh Ji Sharma",gm:"Shrimati Sushila Devi Sharma"},
+  bride:{n:"Megha",f:"Subhash Chandra Sharma",m:"Rekha Devi Sharma",g:"Lt. Nandlal Ji Sharma (Enania)",gm:"Lt. Shanti Devi Sharma"},
   contact:{n:"Suresh Kumar Sharma (Enania) & family",p:"9876543210"},
   msg:"Meli maasi ki shaadi me jalul jalul aana!",
   date:"2026-11-26T18:30:00+05:30",
@@ -394,8 +394,8 @@ var C={
     {n:"Kirtan",h:"कीर्तन",d:"2026-11-22",t:"17:00",v:"Residence",a:"Kolkata"},
     {n:"Mehandi",h:"मेहंदी",d:"2026-11-24",t:"11:00",v:"Evara Kolkata",a:"Kolkata"},
     {n:"Mayra",h:"मायरा",d:"2026-11-25",t:"10:00",v:"Evara Kolkata",a:"Kolkata"},
-    {n:"Wedding",h:"शुभ विवाह",d:"2026-11-26",t:"18:30",v:"Mayuri Banquet",a:"Kolkata",main:1},
-    {n:"Reception",h:"रिसेप्शन",d:"2026-11-26",t:"19:30",v:"Mayuri Banquet",a:"Kolkata"}
+    {n:"Wedding",h:"शुभ विवाह",d:"2026-11-26",v:"Mayuri Banquet",a:"Kolkata",main:1},
+    {n:"Reception",h:"रिसेप्शन",d:"2026-11-26",txt:"7:30 PM Onwards",v:"Mayuri Banquet",a:"Kolkata"}
   ]
 };
 
@@ -427,7 +427,8 @@ function fmt(t){
 }
 function utc(x){return x.toISOString().replace(/[-:]|\.\d{3}/g,'')}
 function gcal(e,loc){
-  var s=new Date(e.d+'T'+e.t+':00+05:30');
+  var tFallback = e.n === 'Reception' ? '19:30' : '18:30'; 
+  var s=new Date(e.d+'T'+(e.t||tFallback)+':00+05:30');
   return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text='+encodeURIComponent(e.n+' – '+C.bn+' & '+C.gn)+'&dates='+utc(s)+'/'+utc(new Date(+s+3*36e5))+'&location='+encodeURIComponent(loc);
 }
 
@@ -454,9 +455,15 @@ document.getElementById('events').innerHTML = groupedEvents.map(function(g){
     var loc = e.l || ((e.v?e.v+', ':'')+e.a);
     html += '<div class="sub-ev">';
     html += '<h3><span class="dev">'+e.h+'</span>'+e.n+'</h3>';
-    html += '<div class="sub-meta"><span class="tm">'+fmt(e.t)+'</span>';
-    if(e.v) html += '<span class="dot">•</span><span class="vn">'+e.v+'</span>';
+    
+    html += '<div class="sub-meta">';
+    if(e.txt) html += '<span class="tm">'+e.txt+'</span>';
+    else if(e.t) html += '<span class="tm">'+fmt(e.t)+'</span>';
+    
+    if((e.t || e.txt) && e.v) html += '<span class="dot">•</span>';
+    if(e.v) html += '<span class="vn">'+e.v+'</span>';
     html += '</div>';
+    
     html += '<a href="'+gcal(e,loc)+'" target="_blank" rel="noopener" class="cal-link">Add to Calendar</a>';
     html += '</div>';
   });
