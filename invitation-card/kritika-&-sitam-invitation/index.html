@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Kritika &amp; Sitam — 10 February 2027</title>
+<title>Sitam &amp; Kritika — 10 February 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Tiro+Devanagari+Hindi&display=swap" rel="stylesheet">
@@ -193,7 +193,7 @@ svg.m { color: var(--gold); }
     <p class="sh dev">॥ श्री गणेशाय नमः ॥</p>
     <div class="ring"><svg class="mand" viewBox="-60 -60 120 120" aria-hidden="true"></svg><span class="mono" id="mono"></span></div>
     <p class="t">A Wedding Invitation</p>
-    <h2><span data-k="bride"></span> &amp; <span data-k="groom"></span></h2>
+    <h2><span data-k="groom"></span> &amp; <span data-k="bride"></span></h2>
     <p class="d" data-k="dateShort"></p>
     <button class="btn" id="open" type="button">Please Open</button>
   </div>
@@ -204,7 +204,7 @@ svg.m { color: var(--gold); }
   <svg class="bg mand m" viewBox="-60 -60 120 120" aria-hidden="true"></svg>
   <p class="sh dev rv">॥ श्री गणेशाय नमः ॥</p>
   <p class="lead rv" style="transition-delay: 0.1s;">With the blessings of Lord Ganesha and our beloved elders, we joyfully invite you to the wedding of</p>
-  <h1 class="names rv" style="transition-delay: 0.2s;"><span data-k="bride"></span><i>&amp;</i><span data-k="groom"></span></h1>
+  <h1 class="names rv" style="transition-delay: 0.2s;"><span data-k="groom"></span><i>&amp;</i><span data-k="bride"></span></h1>
   <p class="when rv" style="transition-delay: 0.3s;"><span data-k="dateText"></span><small data-k="dateNote"></small></p>
   
   <div class="scroll-hint" id="scrollHint">
@@ -217,8 +217,8 @@ svg.m { color: var(--gold); }
   <h2><span class="dev">परिवार</span>Our families</h2>
   <svg class="orn m" viewBox="0 0 90 14" aria-hidden="true"><path d="M0 7H34M56 7H90" stroke="currentColor" stroke-width=".8"/><path d="M45 1l6 6-6 6-6-6z" fill="currentColor"/></svg>
   <div class="fam">
-    <div><span class="dev">वधू पक्ष</span><b data-k="bride"></b><span data-k="brideFam"></span></div>
     <div><span class="dev">वर पक्ष</span><b data-k="groom"></b><span data-k="groomFam"></span></div>
+    <div><span class="dev">वधू पक्ष</span><b data-k="bride"></b><span data-k="brideFam"></span></div>
   </div>
 </section>
 
@@ -247,7 +247,7 @@ svg.m { color: var(--gold); }
 
 <footer class="foot">
   <p class="dev">॥ शुभ विवाह ॥</p>
-  <p>With love, <span data-k="bride"></span> &amp; <span data-k="groom"></span> and families</p>
+  <p>With love, <span data-k="groom"></span> &amp; <span data-k="bride"></span> and families</p>
   <div class="credit">
     <p>Your wedding story, framed for a lifetime.</p>
     <b>Photographed by Harvisha Pictures</b>
@@ -264,26 +264,26 @@ var C={
   groomFam:"Son of Mr. Ashok Gupta & Mrs. Guddi Gupta",
   date:"2027-02-10T19:30:00+05:30",
   dateShort:"10 · February · 2027",
-  dateText:"Thursday, 10 February 2027",
+  dateText:"Wednesday, 10 February 2027",
   dateNote:"Celebrations from 9 to 12 February",
   venue:"Prime Beach Resort", addr:"Silampur ,Mandarmani Beach Road",
   days:[
-    {d:"9 February",w:"Wednesday",items:[
+    {d:"9 February",w:"Tuesday",items:[
       {n:"Mahendi",h:"मेहंदी",t:"11:00 AM",v:"Banquet"},
       {n:"Tilak",h:"तिलक",t:"7:30 PM",v:"Lawn"}]},
-    {d:"10 February",w:"Thursday, wedding day",big:1,items:[
+    {d:"10 February",w:"Wednesday, wedding day",big:1,items:[
       {n:"Vrindavan ki Haldi",h:"हल्दी",t:"11:00 AM",v:"Banquet terrace"},
       {n:"Barat",h:"बारात",t:"7:30 PM",v:""},
       {n:"Varmala",h:"वरमाला",t:"9:30 PM",v:""},
       {n:"Mandap",h:"मंडप",t:"To follow",v:""}]},
-    {d:"12 February",w:"Saturday",items:[
+    {d:"12 February",w:"Friday",items:[
       {n:"Reception (Boubhaat)",h:"स्वागत समारोह",t:"7:00 PM onwards",v:"Ganpati Riverside Pavilion",a:"Upper Foreshore Road, Near Pratap Petrol Pump"}]}
   ]
 };
 
 var $=function(s){return document.querySelectorAll(s)};
 $('[data-k]').forEach(function(e){e.textContent=C[e.dataset.k]});
-document.getElementById('mono').textContent=C.bride[0]+" & "+C.groom[0];
+document.getElementById('mono').textContent=C.groom[0]+" & "+C.bride[0];
 
 var M='<circle r="58" fill="none" stroke="currentColor" stroke-width=".6"/><circle r="53" fill="none" stroke="currentColor" stroke-width=".5" stroke-dasharray="1 3"/>';
 for(var i=0;i<12;i++){M+='<path transform="rotate('+i*30+')" d="M0-50Q9-36 0-22Q-9-36 0-50Z" fill="none" stroke="currentColor" stroke-width=".8"/><circle transform="rotate('+(i*30+15)+')" cy="-40" r="1.6" fill="currentColor"/>'}
