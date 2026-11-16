@@ -145,6 +145,9 @@ svg.m { color: var(--gold); }
 .venue .btn { margin-top: 22px; background: var(--maroon); color: var(--cream); }
 :root:not([data-theme="light"]) .venue .btn { background: var(--goldl); color: var(--maroon2); }
 
+.rsvp strong { display: block; font-size: 1.6rem; font-style: italic; font-weight: 600; color: var(--ink); }
+.rsvp p { color: var(--soft); margin-bottom: 22px; }
+
 .foot { padding: 56px 24px calc(56px + env(safe-area-inset-bottom, 0px)); background: var(--bg2); position: relative; z-index: 5; }
 .foot .dev { font-size: 1.4rem; color: var(--vm); margin: 0; }
 .foot p { color: var(--soft); margin-top: 8px; }
@@ -242,7 +245,16 @@ svg.m { color: var(--gold); }
   <strong data-k="venue"></strong>
   <p data-k="addr"></p>
   <a class="btn" id="map" target="_blank" rel="noopener">Open in Maps</a>
-  <p style="margin-top:34px">Your presence and blessings will make our day complete.</p>
+</section>
+
+<!-- Added RSVP Section -->
+<section class="sec rsvp rv" style="padding-top: 24px;">
+  <h2><span class="dev">संपर्क</span>RSVP</h2>
+  <svg class="orn m" viewBox="0 0 90 14" aria-hidden="true"><path d="M0 7H34M56 7H90" stroke="currentColor" stroke-width=".8"/><path d="M45 1l6 6-6 6-6-6z" fill="currentColor"/></svg>
+  <strong>Mr. Ashok Gupta</strong>
+  <p>Groom's Father</p>
+  <a class="btn" href="tel:+919831025282">Call +91 98310 25282</a>
+  <p style="margin-top:40px">Your presence and blessings will make our day complete.</p>
 </section>
 
 <footer class="foot">
