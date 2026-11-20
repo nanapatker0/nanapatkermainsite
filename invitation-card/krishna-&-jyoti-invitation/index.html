@@ -529,6 +529,43 @@ function reveal(){
   els.forEach(function(e){io.observe(e)});
 }
 
+// Auto-scroll (stops automatically on user interaction or at bottom)
+var autoScrollActive = false;
+var lastScrollTime = 0;
+var scrollSpeed = 35; // Pixels per second (increase for faster, decrease for slower)
+
+function startAutoScroll() {
+  autoScrollActive = true;
+  lastScrollTime = performance.now();
+  requestAnimationFrame(stepScroll);
+}
+
+function stopAutoScroll() {
+  autoScrollActive = false;
+}
+
+function stepScroll(now) {
+  if (!autoScrollActive) return;
+
+  var dt = (now - lastScrollTime) / 1000;
+  lastScrollTime = now;
+
+  window.scrollBy(0, scrollSpeed * dt);
+
+  // Stop when reaching the bottom of the page
+  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2) {
+    stopAutoScroll();
+    return;
+  }
+
+  requestAnimationFrame(stepScroll);
+}
+
+// Cancel auto-scroll the moment the user interacts
+['wheel', 'touchstart', 'mousedown', 'keydown'].forEach(function(evt) {
+  window.addEventListener(evt, stopAutoScroll, { passive: true });
+});
+
 // Envelope + music
 var b=document.getElementById('open'),
     st=document.getElementById('stage'),
@@ -557,6 +594,7 @@ b.onclick=function(){
     document.documentElement.classList.remove('lock');
     window.scrollTo(0,0);
     reveal();
+    setTimeout(startAutoScroll, 2500);
   }, 1800);
   
   setTimeout(function(){st.remove()}, 2800);
