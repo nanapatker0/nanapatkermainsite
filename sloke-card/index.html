@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
+    <!-- Open Graph / Meta Tags -->
+    <title>Sloke Pandey | Harvisha Pictures</title>
+    <meta name="title" content="Sloke Pandey - Creative Head & Filmmaker | Harvisha Pictures">
+    <meta name="description" content="Wedding Photography & Event Cinematography based in Kolkata, India. Connect & save contact details.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Sloke Pandey | Harvisha Pictures">
+    <meta property="og:description" content="Capturing Moments • Creating Memories | Wedding Photography & Cinematography">
+    <meta name="theme-color" content="#2A060E">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Dynamic QRCode JS Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <!-- Tailwind Config for Luxury Palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        maroon: {
+                            DEFAULT: '#3B0A14',
+                            dark: '#2A060E',
+                            light: '#52101D',
+                            accent: '#6B1627'
+                        },
+                        gold: {
+                            DEFAULT: '#D4AF37',
+                            light: '#E8C96D',
+                            dark: '#B08D26',
+                            shimmer: '#FFF5D6'
+                        },
+                        ivory: {
+                            DEFAULT: '#FAF6F0',
+                            card: '#F4EEE5',
+                            border: '#E3D7C7',
+                            dark: '#D8C9B5'
+                        },
+                        charcoal: '#1F1A1B'
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'gold-glow': '0 0 25px rgba(212, 175, 55, 0.22)',
+                        'gold-subtle': '0 4px 20px rgba(42, 6, 14, 0.08)',
+                        'card-depth': '0 20px 45px -15px rgba(26, 3, 9, 0.25)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Selection & Base Styles */
+        ::selection {
+            background: #D4AF37;
+            color: #2A060E;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #170307;
+            color: #1F1A1B;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Luxury Ambient Gradient Texture */
+        .bg-grain {
+            background-image: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.2), transparent 70%),
+                              radial-gradient(circle at 80% 50%, rgba(82, 16, 29, 0.45), transparent 55%);
+        }
+
+        /* Shimmer Effect for Primary Gold CTA */
+        .btn-shimmer {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-shimmer::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                60deg,
+                transparent 30%,
+                rgba(255, 255, 255, 0.45) 50%,
+                transparent 70%
+            );
+            transform: rotate(30deg) translateX(-100%);
+            animation: shimmerEffect 4s infinite linear;
+        }
+
+        @keyframes shimmerEffect {
+            0% { transform: rotate(30deg) translateX(-150%); }
+            20% { transform: rotate(30deg) translateX(150%); }
+            100% { transform: rotate(30deg) translateX(150%); }
+        }
+
+        /* Staggered Animations */
+        .animate-fade-up {
+            animation: fadeUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(18px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .delay-1 { animation-delay: 0.08s; }
+        .delay-2 { animation-delay: 0.16s; }
+        .delay-3 { animation-delay: 0.24s; }
+
+        /* Modal Overlay Smooth Fade */
+        .modal-active {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        /* Tactile Press Feedback */
+        .active-tap:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex justify-center items-center sm:py-8 sm:px-4 bg-maroon-dark">
+
+    <!-- MAIN CARD CONTAINER (Mobile First, Max-Width 430px) -->
+    <main class="w-full max-w-[430px] min-h-screen sm:min-h-[840px] bg-ivory text-charcoal sm:rounded-[36px] shadow-card-depth overflow-hidden flex flex-col relative border border-gold/30">
+
+        <!-- HEADER SECTION (Deep Maroon & Radial Glow) -->
+        <header class="relative bg-maroon-dark text-ivory px-6 pt-9 pb-14 bg-grain border-b border-gold/30">
+            
+            <!-- Top Bar Actions (Monogram Label & QR Code Trigger) -->
+            <div class="flex justify-between items-center mb-6">
+                <div class="flex items-center space-x-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-gold animate-pulse"></span>
+                    <span class="font-serif text-xs tracking-[0.22em] text-gold uppercase font-semibold">
+                        Digital NFC Card
+                    </span>
+                </div>
+                
+                <button onclick="toggleQRModal(true)" aria-label="Show QR Code" class="p-2.5 rounded-full bg-maroon-light/60 border border-gold/40 text-gold hover:bg-gold hover:text-maroon-dark transition-all duration-300 active-tap shadow-lg">
+                    <!-- QR Icon -->
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M12 4v1m6 11h2m-6 0h-2v4m0-6v-3m6 3.5M3 3h6v6H3V3zm12 0h6v6h-6V3zM3 15h6v6H3v-6zm2-10v2h2V5H5zm12 0v2h2V5h-2zm-12 10v2h2v-2H5zm14 0v2h2v-2h-2z"/>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Profile Avatar / Monogram -->
+            <div class="flex flex-col items-center text-center">
+                <div class="relative mb-5 group">
+                    <div class="absolute -inset-1 rounded-full bg-gradient-to-r from-gold via-gold-light to-gold opacity-80 blur-sm group-hover:opacity-100 transition duration-500"></div>
+                    <div id="avatar-container" class="relative w-28 h-28 rounded-full bg-maroon border-2 border-gold flex items-center justify-center overflow-hidden shadow-gold-glow">
+                        <!-- JS injects image with SP monogram fallback -->
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <h1 id="profile-name" class="font-serif text-3xl font-bold tracking-tight text-ivory mb-1">
+                    <!-- Populated by JS -->
+                </h1>
+                
+                <p id="profile-role" class="text-xs font-semibold uppercase tracking-widest text-gold mb-1">
+                    <!-- Populated by JS -->
+                </p>
+
+                <p id="profile-company" class="text-sm font-medium text-ivory/85 mb-3">
+                    <!-- Populated by JS -->
+                </p>
+
+                <!-- Location Badge -->
+                <div class="inline-flex items-center px-3.5 py-1 rounded-full bg-maroon-light/70 border border-gold/30 text-xs text-ivory/90 font-medium shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-gold mr-1.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                    </svg>
+                    <span id="profile-location"><!-- Populated by JS --></span>
+                </div>
+            </div>
+        </header>
+
+        <!-- CONTENT BODY -->
+        <div class="flex-1 px-5 -mt-6 pb-8 relative z-10 space-y-6">
+
+            <!-- Primary Action: Save to Contacts (.vcf) -->
+            <div class="animate-fade-up">
+                <button onclick="downloadVCard()" class="btn-shimmer active-tap w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-gold via-gold-light to-gold text-maroon-dark font-bold text-sm tracking-wide shadow-gold-glow hover:shadow-xl transition-all duration-300 flex items-center justify-center space-x-3 border border-gold-light/40">
+                    <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/>
+                    </svg>
+                    <span class="uppercase tracking-wider">Save to Contacts</span>
+                </button>
+            </div>
+
+            <!-- Tagline Banner -->
+            <div class="animate-fade-up delay-1 text-center py-2.5 px-4 rounded-xl bg-ivory-card border border-ivory-border shadow-sm">
+                <p id="profile-tagline" class="font-serif italic text-sm text-maroon">
+                    <!-- Populated by JS -->
+                </p>
+            </div>
+
+            <!-- Quick Action Grid (4 Buttons) -->
+            <section class="animate-fade-up delay-2">
+                <h2 class="text-[10px] font-bold uppercase tracking-widest text-maroon-light/60 mb-2.5 px-1">Quick Connect</h2>
+                <div class="grid grid-cols-4 gap-2.5">
+                    
+                    <!-- Call -->
+                    <a id="btn-call" href="#" class="active-tap flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-ivory-border text-maroon hover:border-gold hover:text-gold-dark hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full bg-ivory flex items-center justify-center mb-1 text-maroon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold tracking-tight">Call</span>
+                    </a>
+
+                    <!-- WhatsApp -->
+                    <a id="btn-whatsapp" href="#" target="_blank" rel="noopener noreferrer" class="active-tap flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-ivory-border text-maroon hover:border-gold hover:text-gold-dark hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full bg-ivory flex items-center justify-center mb-1 text-emerald-700">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
+                                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.144 4.18 4.287-1.124z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold tracking-tight">WhatsApp</span>
+                    </a>
+
+                    <!-- Email -->
+                    <a id="btn-email" href="#" class="active-tap flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-ivory-border text-maroon hover:border-gold hover:text-gold-dark hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full bg-ivory flex items-center justify-center mb-1 text-maroon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold tracking-tight">Email</span>
+                    </a>
+
+                    <!-- Share Card -->
+                    <button onclick="shareCard()" class="active-tap flex flex-col items-center justify-center p-3 rounded-2xl bg-white border border-ivory-border text-maroon hover:border-gold hover:text-gold-dark hover:shadow-md transition-all duration-300">
+                        <div class="w-10 h-10 rounded-full bg-ivory flex items-center justify-center mb-1 text-maroon">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                        </div>
+                        <span class="text-[11px] font-semibold tracking-tight">Share</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Featured Links Section -->
+            <section class="animate-fade-up delay-3 space-y-2.5">
+                <h2 class="text-[10px] font-bold uppercase tracking-widest text-maroon-light/60 px-1">Connect & Inquiry Links</h2>
+                <div id="links-container" class="space-y-2.5">
+                    <!-- Dynamic Featured Links Rendered Here -->
+                </div>
+            </section>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="mt-auto py-5 px-6 bg-ivory-card border-t border-ivory-border text-center">
+            <p class="font-serif text-base text-maroon font-semibold tracking-wide" id="footer-brand">
+                © Harvisha Pictures • Kolkata
+            </p>
+        </footer>
+
+    </main>
+
+    <!-- QR CODE MODAL -->
+    <div id="qr-modal" class="fixed inset-0 bg-maroon-dark/80 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-ivory w-full max-w-xs rounded-3xl p-6 text-center border border-gold/40 shadow-2xl relative transform transition-all duration-300 scale-95" id="qr-modal-content">
+            
+            <button onclick="toggleQRModal(false)" aria-label="Close QR Modal" class="absolute top-4 right-4 p-2 rounded-full text-maroon-light/60 hover:text-maroon hover:bg-ivory-card transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+
+            <h3 class="font-serif text-2xl font-bold text-maroon mb-1">Scan QR Code</h3>
+            <p class="text-xs text-maroon-light/70 mb-5">Scan to instantly view this digital card</p>
+
+            <!-- QR Code Canvas Container -->
+            <div class="p-4 bg-white rounded-2xl shadow-inner border border-ivory-border inline-block mb-5">
+                <div id="qrcode-target" class="flex justify-center"></div>
+            </div>
+
+            <div class="space-y-2">
+                <button onclick="copyCurrentURL()" class="w-full py-3 px-4 rounded-xl bg-maroon text-gold font-semibold text-xs tracking-wider uppercase border border-gold/30 hover:bg-maroon-light transition-colors active-tap">
+                    Copy Card Link
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING TOAST NOTIFICATION -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-maroon text-ivory px-5 py-3 rounded-full text-xs font-medium shadow-2xl border border-gold/40 flex items-center space-x-2 opacity-0 pointer-events-none transition-all duration-300 z-50">
+        <svg class="w-4 h-4 text-gold shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+        </svg>
+        <span id="toast-message">Link copied to clipboard!</span>
+    </div>
+
+    <!-- MAIN JAVASCRIPT LOGIC -->
+    <script>
+        /**
+         * ==========================================
+         * CENTRALIZED PROFILE CONFIGURATION
+         * ==========================================
+         */
+        const PROFILE = {
+            firstName: "Sloke",
+            lastName: "Pandey",
+            role: "Creative Head & Filmmaker",
+            company: "Harvisha Pictures",
+            tagline: "Capturing Moments • Creating Memories",
+            location: "Kolkata, West Bengal",
+            phone: "+916289665819",
+            phoneDisplay: "+91 62896 65819",
+            whatsapp: "916289665819",
+            whatsappMessage: "Hi Sloke, I tapped your NFC card and would love to connect!",
+            workEmail: "hello@harvishapictures.in",
+            personalEmail: "info@harvishapictures.in",
+            website: "https://harvishapictures.in",
+            instagram: "https://instagram.com/framesbysloke",
+            instagramHandle: "@framesbysloke",
+            avatarUrl: "../images/slokepandey.JPG",
+            
+            // Featured Action Links List
+            links: [
+                {
+                    title: "Official Website",
+                    subtitle: "harvishapictures.in",
+                    url: "https://harvishapictures.in",
+                    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"/></svg>`
+                },
+                {
+                    title: "Instagram",
+                    subtitle: "@framesbysloke",
+                    url: "https://instagram.com/framesbysloke",
+                    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
+                },
+                {
+                    title: "Harvisha Pictures Instagram",
+                    subtitle: "@harvisha_pictures",
+                    url: "https://instagram.com/harvisha_pictures",
+                    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>`
+                },
+                {
+                    title: "WhatsApp Direct",
+                    subtitle: "+91 62896 65819",
+                    url: `https://wa.me/916289665819?text=${encodeURIComponent("Hi Sloke, I tapped your NFC card and would love to connect!")}`,
+                    icon: `<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-1.144 4.18 4.287-1.124z"/></svg>`
+                },
+                {
+                    title: "Direct Email",
+                    subtitle: "hello@harvishapictures.in",
+                    url: "mailto:hello@slokepandey.in?subject=Direct%20Contact%20-%20Sloke%20Pandey",
+                    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"/></svg>`
+                },
+                {
+                    title: "Business Inquiries",
+                    subtitle: "info@harvishapictures.in",
+                    url: "mailto:info@harvishapictures.in?subject=Business%20Inquiry%20-%20Harvisha%20Pictures",
+                    icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>`
+                }
+            ]
+        };
+
+        /**
+         * ==========================================
+         * INITIALIZATION & RENDER LOGIC
+         * ==========================================
+         */
+        document.addEventListener('DOMContentLoaded', () => {
+            renderProfile();
+            renderLinks();
+            setupQuickActions();
+            generateQRCode();
+        });
+
+        function renderProfile() {
+            document.getElementById('profile-name').textContent = `${PROFILE.firstName} ${PROFILE.lastName}`;
+            document.getElementById('profile-role').textContent = PROFILE.role;
+            document.getElementById('profile-company').textContent = PROFILE.company;
+            document.getElementById('profile-tagline').textContent = `“${PROFILE.tagline}”`;
+            document.getElementById('profile-location').textContent = PROFILE.location;
+            document.getElementById('footer-brand').textContent = `© ${PROFILE.company} • Kolkata`;
+
+            // Render Avatar with dynamic SP monogram fallback
+            const avatarContainer = document.getElementById('avatar-container');
+            const img = document.createElement('img');
+            img.src = PROFILE.avatarUrl;
+            img.alt = `${PROFILE.firstName} ${PROFILE.lastName}`;
+            img.className = "w-full h-full object-cover";
+            img.onerror = function() {
+                renderMonogramFallback(avatarContainer);
+            };
+            avatarContainer.appendChild(img);
+        }
+
+        function renderMonogramFallback(container) {
+            if (!container) container = document.getElementById('avatar-container');
+            const initials = `${PROFILE.firstName.charAt(0)}${PROFILE.lastName.charAt(0)}`;
+            container.innerHTML = `<span class="font-serif text-3xl font-bold tracking-widest text-gold">${initials}</span>`;
+        }
+
+        function renderLinks() {
+            const container = document.getElementById('links-container');
+            container.innerHTML = '';
+
+            PROFILE.links.forEach(link => {
+                const card = document.createElement('a');
+                card.href = link.url;
+                if (!link.url.startsWith('mailto:')) {
+                    card.target = "_blank";
+                    card.rel = "noopener noreferrer";
+                }
+                card.className = "active-tap group flex items-center justify-between p-3.5 rounded-2xl bg-white border border-ivory-border shadow-sm hover:border-gold hover:shadow-gold-subtle transition-all duration-300";
+
+                card.innerHTML = `
+                    <div class="flex items-center space-x-3.5 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-ivory text-maroon group-hover:bg-maroon group-hover:text-gold flex items-center justify-center shrink-0 transition-colors duration-300">
+                            ${link.icon}
+                        </div>
+                        <div class="text-left truncate">
+                            <h3 class="text-sm font-bold text-maroon group-hover:text-gold-dark transition-colors">${link.title}</h3>
+                            <p class="text-xs text-maroon-light/70 font-normal truncate leading-tight">${link.subtitle}</p>
+                        </div>
+                    </div>
+                    <div class="text-maroon-light/40 group-hover:text-gold group-hover:translate-x-1 transition-all duration-300 shrink-0 ml-2">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function setupQuickActions() {
+            document.getElementById('btn-call').href = `tel:${PROFILE.phone}`;
+            
+            const waGreeting = encodeURIComponent(PROFILE.whatsappMessage);
+            document.getElementById('btn-whatsapp').href = `https://wa.me/${PROFILE.whatsapp}?text=${waGreeting}`;
+            
+            const emailSubject = encodeURIComponent(`NFC Contact Card Connection`);
+            document.getElementById('btn-email').href = `mailto:${PROFILE.workEmail}?subject=${emailSubject}`;
+        }
+
+        /**
+         * ==========================================
+         * vCARD 3.0 EXPORTER (.vcf)
+         * Downloads: Sloke_Pandey_Harvisha_Pictures.vcf
+         * ==========================================
+         */
+        function downloadVCard() {
+            const vCardData = 
+`BEGIN:VCARD
+VERSION:3.0
+N:${PROFILE.lastName};${PROFILE.firstName};;;
+FN:${PROFILE.firstName} ${PROFILE.lastName}
+ORG:${PROFILE.company}
+TITLE:${PROFILE.role}
+TEL;TYPE=CELL:${PROFILE.phone}
+EMAIL;TYPE=WORK:${PROFILE.workEmail}
+EMAIL;TYPE=HOME:${PROFILE.personalEmail}
+URL:${PROFILE.website}
+ADR;TYPE=WORK:;;;${PROFILE.location};;;India
+NOTE:Wedding Photography & Event Cinematography | Instagram: ${PROFILE.instagramHandle}
+END:VCARD`;
+
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8;' });
+            const fileName = `Sloke_Pandey_Harvisha_Pictures.vcf`;
+
+            if (navigator.msSaveBlob) {
+                navigator.msSaveBlob(blob, fileName);
+            } else {
+                const link = document.createElement('a');
+                if (link.download !== undefined) {
+                    const url = URL.createObjectURL(blob);
+                    link.setAttribute('href', url);
+                    link.setAttribute('download', fileName);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(url);
+                    showToast('Contact file ready! Tap to save.');
+                } else {
+                    showToast('Unable to download vCard on this browser.');
+                }
+            }
+        }
+
+        /**
+         * ==========================================
+         * SMART SHARE & CLIPBOARD FALLBACK
+         * ==========================================
+         */
+        function shareCard() {
+            const shareData = {
+                title: `${PROFILE.firstName} ${PROFILE.lastName} | ${PROFILE.company}`,
+                text: `${PROFILE.tagline}`,
+                url: window.location.href.startsWith('http') ? window.location.href : PROFILE.website
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .catch(() => {
+                        // Dismissed share sheet
+                    });
+            } else {
+                copyCurrentURL();
+            }
+        }
+
+        function copyCurrentURL() {
+            const targetUrl = window.location.href.startsWith('http') ? window.location.href : PROFILE.website;
+            
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(targetUrl)
+                    .then(() => showToast('Card link copied to clipboard!'))
+                    .catch(() => fallbackCopyTextToClipboard(targetUrl));
+            } else {
+                fallbackCopyTextToClipboard(targetUrl);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.top = '0';
+            textArea.style.left = '0';
+            textArea.style.opacity = '0';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showToast('Card link copied to clipboard!');
+                } else {
+                    showToast('Failed to copy link.');
+                }
+            } catch (err) {
+                showToast('Copying not supported on this browser.');
+            }
+            document.body.removeChild(textArea);
+        }
+
+        /**
+         * ==========================================
+         * QR CODE GENERATOR & MODAL
+         * ==========================================
+         */
+        function generateQRCode() {
+            const targetUrl = window.location.href.startsWith('http') ? window.location.href : PROFILE.website;
+            const qrcodeContainer = document.getElementById("qrcode-target");
+            qrcodeContainer.innerHTML = "";
+
+            new QRCode(qrcodeContainer, {
+                text: targetUrl,
+                width: 170,
+                height: 170,
+                colorDark: "#2A060E",
+                colorLight: "#FFFFFF",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+
+        function toggleQRModal(show) {
+            const modal = document.getElementById('qr-modal');
+            const content = document.getElementById('qr-modal-content');
+
+            if (show) {
+                modal.classList.add('modal-active');
+                content.classList.remove('scale-95');
+                content.classList.add('scale-100');
+            } else {
+                modal.classList.remove('modal-active');
+                content.classList.remove('scale-100');
+                content.classList.add('scale-95');
+            }
+        }
+
+        /**
+         * ==========================================
+         * TOAST NOTIFICATION CONTROLLER
+         * ==========================================
+         */
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+
+            toastMessage.textContent = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
